@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Victor Capslock | Senior UI/UX Designer & Developer</title>
+    <title>Vicy Capslock | Senior Network Engineer & Infrastructure Architect</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -28,7 +28,7 @@
                         'mustard-hover': 'var(--accent-hover, #cbb41a)',
                         'light-gray': '#BDBDBF',
                         'dark-gray': '#272729',
-                        'ghost-gray': 'rgba(255, 255, 255, 0.05)',
+                        'ghost-gray': 'rgba(255, 255, 255, 0.04)',
                     },
                     fontFamily: {
                         heading: ['Montserrat', 'sans-serif'],
@@ -54,7 +54,7 @@
 
         /* Custom scrollbar & editorial touches */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 7px;
         }
         ::-webkit-scrollbar-track {
             background: #0D0D0F;
@@ -78,7 +78,7 @@
 
         /* SVG Circular Progress transitions */
         .progress-ring-circle {
-            transition: stroke-dashoffset 1s ease-in-out;
+            transition: stroke-dashoffset 1.2s ease-in-out;
             transform: rotate(-90deg);
             transform-origin: 50% 50%;
             stroke: var(--accent-color) !important;
@@ -86,8 +86,8 @@
 
         /* Custom image cutout frame */
         .cutout-portrait {
-            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
-            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 82%, rgba(0,0,0,0) 100%);
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 82%, rgba(0,0,0,0) 100%);
         }
 
         /* Custom Sharp UI Transitions */
@@ -104,748 +104,1183 @@
         .modal-blur {
             backdrop-filter: blur(8px);
         }
+
+        /* Sidebar active nav item glow */
+        .nav-link.active {
+            color: var(--accent-color);
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--accent-color);
+        }
+
+        /* Pulse badge animation */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.4; }
+            100% { transform: scale(0.95); opacity: 1; }
+        }
+        .pulse-dot {
+            animation: pulse-ring 2s infinite ease-in-out;
+        }
     </style>
 </head>
-<body class="bg-main-black text-white font-body selection:bg-mustard selection:text-black min-h-screen flex flex-col justify-between overflow-x-hidden">
+<body class="bg-main-black text-white font-body selection:bg-mustard selection:text-black min-h-screen overflow-x-hidden">
 
-    <!-- STICKY NAVBAR -->
-    <nav class="sticky top-0 z-40 bg-main-black/90 backdrop-blur-md border-b border-dark-gray transition-all">
-        <div class="max-w-5xl mx-auto px-4 sm:px-8 py-4 flex items-center justify-between">
-            <a href="#about" class="flex items-center gap-2 group">
-                <div class="w-8 h-8 bg-mustard text-black flex items-center justify-center font-heading font-black text-lg transition-transform group-hover:scale-105">
-                    V
-                </div>
-                <span class="font-heading font-black tracking-wider text-sm text-white uppercase group-hover:text-mustard transition-colors">
-                    CAPSLOCK
-                </span>
+    <!-- MOBILE TOP BAR (Only visible on screens < lg) -->
+    <header class="lg:hidden sticky top-0 z-50 bg-main-black/95 backdrop-blur-md border-b border-dark-gray px-4 py-3 flex items-center justify-between">
+        <a href="#about" class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-mustard text-black flex items-center justify-center font-heading font-black text-lg">
+                V
+            </div>
+            <span class="font-heading font-black tracking-wider text-sm text-white uppercase">
+                CAPSLOCK
+            </span>
+        </a>
+
+        <div class="flex items-center gap-2">
+            <!-- Direct WhatsApp Quick Icon -->
+            <a href="https://wa.me/254100326074" target="_blank" rel="noopener" class="bg-emerald-600 hover:bg-emerald-500 text-white w-8 h-8 flex items-center justify-center text-xs font-bold transition-colors" title="Direct WhatsApp">
+                <i class="fa-brands fa-whatsapp text-sm"></i>
             </a>
 
-            <!-- Desktop Links -->
-            <div class="hidden md:flex items-center gap-6 font-heading text-xs uppercase tracking-widest font-semibold text-light-gray">
-                <a href="#about" class="hover:text-mustard transition-colors">About</a>
-                <a href="#services" class="hover:text-mustard transition-colors">Services</a>
-                <a href="#skills" class="hover:text-mustard transition-colors">Skills</a>
-                <a href="#works" class="hover:text-mustard transition-colors">Works</a>
-                <a href="#experience" class="hover:text-mustard transition-colors">Experience</a>
-                <a href="#reference" class="hover:text-mustard transition-colors">Reference</a>
-                <a href="#contact" class="hover:text-mustard transition-colors">Contact</a>
-            </div>
+            <button onclick="toggleThemePanel()" title="Theme Accent" class="w-8 h-8 border border-dark-gray flex items-center justify-center text-xs text-light-gray hover:text-mustard">
+                <i class="fa-solid fa-palette"></i>
+            </button>
 
-            <!-- Header CTA & Mobile Menu Toggle -->
-            <div class="flex items-center gap-3">
-                <button onclick="toggleThemePanel()" title="Change Accent Theme" class="w-8 h-8 rounded-full border border-dark-gray hover:border-mustard flex items-center justify-center text-xs text-light-gray hover:text-mustard transition-colors">
-                    <i class="fa-solid fa-palette"></i>
-                </button>
-                <a href="#contact" class="hidden sm:inline-flex btn-sharp bg-mustard hover:bg-mustard-hover text-black px-4 py-2 font-heading font-extrabold text-[11px] uppercase tracking-wider">
-                    HIRE ME
-                </a>
-                <button onclick="toggleMobileNav()" class="md:hidden text-light-gray hover:text-mustard p-2 text-xl" aria-label="Toggle Navigation">
-                    <i id="mobileMenuIcon" class="fa-solid fa-bars"></i>
-                </button>
-            </div>
-        </div>
-
-        <!-- Mobile Drawer Menu -->
-        <div id="mobileDrawer" class="hidden md:hidden bg-sec-black border-b border-dark-gray px-6 py-6 flex flex-col gap-4 font-heading text-xs uppercase tracking-wider">
-            <a href="#about" onclick="toggleMobileNav()" class="text-light-gray hover:text-mustard py-1">About Me</a>
-            <a href="#services" onclick="toggleMobileNav()" class="text-light-gray hover:text-mustard py-1">Services</a>
-            <a href="#skills" onclick="toggleMobileNav()" class="text-light-gray hover:text-mustard py-1">My Skills</a>
-            <a href="#works" onclick="toggleMobileNav()" class="text-light-gray hover:text-mustard py-1">Featured Works</a>
-            <a href="#experience" onclick="toggleMobileNav()" class="text-light-gray hover:text-mustard py-1">Experience</a>
-            <a href="#reference" onclick="toggleMobileNav()" class="text-light-gray hover:text-mustard py-1">Reference</a>
-            <a href="#contact" onclick="toggleMobileNav()" class="text-light-gray hover:text-mustard py-1">Contact Me</a>
-        </div>
-    </nav>
-
-    <!-- TOP HEADER BANNER -->
-    <header class="w-full bg-mustard py-8 px-4 sm:px-8 text-center uppercase tracking-widest font-heading font-extrabold text-xl sm:text-2xl shadow-lg relative z-20 transition-colors">
-        <div class="max-w-5xl mx-auto flex justify-center items-center gap-2">
-            <span class="text-black font-black">VICTOR CAPSLOCK</span>
-            <span class="text-white opacity-90 font-light">/ PORTFOLIO 2026</span>
+            <button onclick="toggleMobileNav()" class="text-light-gray hover:text-mustard p-1.5 text-xl" aria-label="Toggle Navigation Menu">
+                <i id="mobileMenuIcon" class="fa-solid fa-bars"></i>
+            </button>
         </div>
     </header>
 
-    <!-- MAIN WRAPPER CONTAINER -->
-    <main class="w-full max-w-5xl mx-auto px-4 sm:px-8 flex-grow">
+    <!-- MOBILE DRAWER MENU (Only visible when toggled on mobile) -->
+    <div id="mobileDrawer" class="lg:hidden fixed inset-x-0 top-[57px] z-40 bg-sec-black border-b border-dark-gray px-6 py-6 hidden flex-col gap-3 font-heading text-xs uppercase tracking-wider shadow-2xl">
+        <a href="#about" onclick="toggleMobileNav()" class="text-light-gray hover:text-mustard py-1.5 flex items-center gap-3"><i class="fa-solid fa-user w-4 text-mustard"></i> About Me</a>
+        <a href="#services" onclick="toggleMobileNav()" class="text-light-gray hover:text-mustard py-1.5 flex items-center gap-3"><i class="fa-solid fa-network-wired w-4 text-mustard"></i> Network Services</a>
+        <a href="#skills" onclick="toggleMobileNav()" class="text-light-gray hover:text-mustard py-1.5 flex items-center gap-3"><i class="fa-solid fa-chart-pie w-4 text-mustard"></i> Tech Stack</a>
+        <a href="#works" onclick="toggleMobileNav()" class="text-light-gray hover:text-mustard py-1.5 flex items-center gap-3"><i class="fa-solid fa-server w-4 text-mustard"></i> Infrastructure Projects</a>
+        <a href="#experience" onclick="toggleMobileNav()" class="text-light-gray hover:text-mustard py-1.5 flex items-center gap-3"><i class="fa-solid fa-timeline w-4 text-mustard"></i> Experience & Certs</a>
+        <a href="#reference" onclick="toggleMobileNav()" class="text-light-gray hover:text-mustard py-1.5 flex items-center gap-3"><i class="fa-solid fa-quote-left w-4 text-mustard"></i> Endorsements</a>
+        <a href="#insights" onclick="toggleMobileNav()" class="text-light-gray hover:text-mustard py-1.5 flex items-center gap-3"><i class="fa-solid fa-newspaper w-4 text-mustard"></i> Tech Articles</a>
+        <a href="#faq" onclick="toggleMobileNav()" class="text-light-gray hover:text-mustard py-1.5 flex items-center gap-3"><i class="fa-solid fa-circle-question w-4 text-mustard"></i> FAQ</a>
+        <a href="#contact" onclick="toggleMobileNav()" class="text-light-gray hover:text-mustard py-1.5 flex items-center gap-3"><i class="fa-solid fa-paper-plane w-4 text-mustard"></i> Contact Engineer</a>
+        
+        <div class="pt-3 border-t border-dark-gray flex items-center justify-between">
+            <a href="https://wa.me/254100326074" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-2.5 px-4 font-bold text-center flex items-center justify-center gap-2">
+                <i class="fa-brands fa-whatsapp text-base"></i> WHATSAPP VICY
+            </a>
+        </div>
+    </div>
 
-        <!-- SECTION 1: ABOUT ME HERO -->
-        <section id="about" class="relative pt-12 pb-20 border-b border-dark-gray">
+    <!-- MAIN PAGE CONTAINER: LEFT SIDEBAR + RIGHT CONTENT -->
+    <div class="flex min-h-screen">
+
+        <!-- DESKTOP LEFT NAVIGATION BAR (Persistent Sidebar for lg screens) -->
+        <aside class="hidden lg:flex fixed top-0 left-0 h-screen w-72 bg-sec-black border-r border-dark-gray flex-col justify-between z-40 overflow-y-auto">
             
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start relative z-10">
-                
-                <!-- Left Portrait Column -->
-                <div class="md:col-span-5 relative group">
-                    <div class="relative w-full max-w-sm mx-auto md:max-w-none">
-                        <!-- Background Glow behind portrait -->
-                        <div class="absolute inset-0 bg-mustard/10 filter blur-xl transform scale-95 rounded-none"></div>
-                        
-                        <!-- Main Cutout Image -->
-                        <div class="relative overflow-hidden cutout-portrait">
-                            <img src="https://i.pinimg.com/736x/b9/09/57/b90957b38f8222de334db733940d2979.jpg" 
-                                 alt="Victor Capslock" 
-                                 class="w-full h-auto object-cover grayscale contrast-125 hover:grayscale-0 transition-all duration-700 block"
-                                 onerror="this.onerror=null; this.src='https://placehold.co/500x650/111112/E5CC20?text=Victor+Capslock';">
-                        </div>
-
-                        <!-- Name Overlay Card -->
-                        <div class="absolute bottom-6 left-2 right-2 bg-mustard/90 backdrop-blur-sm p-4 border-l-4 border-black shadow-2xl transition-transform duration-300 transform group-hover:translate-y-[-4px]">
-                            <h2 class="font-heading font-black text-lg sm:text-xl text-black uppercase tracking-tight">
-                                NAME: <span class="text-white drop-shadow-sm">VICTOR CAPSLOCK</span>
-                            </h2>
-                            <p class="font-heading text-xs sm:text-sm text-black/90 font-semibold tracking-wider uppercase mt-1">
-                                Professional UI/UX Designer
-                            </p>
-                        </div>
+            <!-- Sidebar Top: Profile & Branding -->
+            <div class="p-6 border-b border-dark-gray">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-12 h-12 bg-mustard text-black flex items-center justify-center font-heading font-black text-2xl shadow-lg">
+                        V
+                    </div>
+                    <div>
+                        <a href="#about" class="font-heading font-black text-base tracking-wider text-white uppercase hover:text-mustard transition-colors block">
+                            CAPSLOCK
+                        </a>
+                        <span class="text-[10px] font-heading font-bold text-light-gray tracking-widest uppercase block">
+                            NETWORK & INFRASTRUCTURE
+                        </span>
                     </div>
                 </div>
 
-                <!-- Right Copy Column -->
-                <div class="md:col-span-7 relative pt-4 md:pt-2">
+                <!-- Status Badge -->
+                <div class="inline-flex items-center gap-2 bg-card-black border border-dark-gray px-3 py-1.5 w-full">
+                    <span class="w-2.5 h-2.5 bg-emerald-500 rounded-full pulse-dot"></span>
+                    <span class="text-[10px] font-mono text-light-gray uppercase tracking-wider">Available for Consulting</span>
+                </div>
+            </div>
+
+            <!-- Sidebar Navigation Links -->
+            <nav class="py-4 px-3 flex-grow space-y-1 font-heading text-xs uppercase tracking-wider">
+                <a href="#about" class="nav-link flex items-center gap-3 px-4 py-2.5 text-light-gray hover:text-white transition-all rounded-none group">
+                    <i class="fa-solid fa-user text-xs w-4 text-light-gray/60 group-hover:text-mustard"></i>
+                    <span>About Me</span>
+                </a>
+                <a href="#services" class="nav-link flex items-center gap-3 px-4 py-2.5 text-light-gray hover:text-white transition-all rounded-none group">
+                    <i class="fa-solid fa-network-wired text-xs w-4 text-light-gray/60 group-hover:text-mustard"></i>
+                    <span>Services</span>
+                </a>
+                <a href="#skills" class="nav-link flex items-center gap-3 px-4 py-2.5 text-light-gray hover:text-white transition-all rounded-none group">
+                    <i class="fa-solid fa-chart-pie text-xs w-4 text-light-gray/60 group-hover:text-mustard"></i>
+                    <span>Tech Matrix</span>
+                </a>
+                <a href="#works" class="nav-link flex items-center gap-3 px-4 py-2.5 text-light-gray hover:text-white transition-all rounded-none group">
+                    <i class="fa-solid fa-server text-xs w-4 text-light-gray/60 group-hover:text-mustard"></i>
+                    <span>Projects</span>
+                </a>
+                <a href="#experience" class="nav-link flex items-center gap-3 px-4 py-2.5 text-light-gray hover:text-white transition-all rounded-none group">
+                    <i class="fa-solid fa-timeline text-xs w-4 text-light-gray/60 group-hover:text-mustard"></i>
+                    <span>Experience & Certs</span>
+                </a>
+                <a href="#reference" class="nav-link flex items-center gap-3 px-4 py-2.5 text-light-gray hover:text-white transition-all rounded-none group">
+                    <i class="fa-solid fa-quote-left text-xs w-4 text-light-gray/60 group-hover:text-mustard"></i>
+                    <span>References</span>
+                </a>
+                <a href="#insights" class="nav-link flex items-center gap-3 px-4 py-2.5 text-light-gray hover:text-white transition-all rounded-none group">
+                    <i class="fa-solid fa-newspaper text-xs w-4 text-light-gray/60 group-hover:text-mustard"></i>
+                    <span>Articles</span>
+                </a>
+                <a href="#faq" class="nav-link flex items-center gap-3 px-4 py-2.5 text-light-gray hover:text-white transition-all rounded-none group">
+                    <i class="fa-solid fa-circle-question text-xs w-4 text-light-gray/60 group-hover:text-mustard"></i>
+                    <span>FAQ</span>
+                </a>
+                <a href="#contact" class="nav-link flex items-center gap-3 px-4 py-2.5 text-light-gray hover:text-white transition-all rounded-none group">
+                    <i class="fa-solid fa-paper-plane text-xs w-4 text-light-gray/60 group-hover:text-mustard"></i>
+                    <span>Contact Me</span>
+                </a>
+            </nav>
+
+            <!-- Sidebar Bottom: Direct WhatsApp Callout & Theme Controls -->
+            <div class="p-4 border-t border-dark-gray space-y-3 bg-card-black/40">
+                <!-- Direct WhatsApp Owner CTA -->
+                <a href="https://wa.me/254100326074" target="_blank" rel="noopener" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-2.5 px-3 font-heading font-extrabold text-[11px] uppercase tracking-wider flex items-center justify-center gap-2 shadow-md transition-all group">
+                    <i class="fa-brands fa-whatsapp text-base group-hover:scale-110 transition-transform"></i>
+                    <span>WhatsApp Vicy</span>
+                </a>
+
+                <!-- Theme Palette Swatch Quick Switch -->
+                <div class="flex items-center justify-between text-[10px] font-heading uppercase text-light-gray pt-1">
+                    <span class="tracking-widest">Accent Palette</span>
+                    <button onclick="toggleThemePanel()" class="hover:text-mustard text-xs" title="Change Theme Palette">
+                        <i class="fa-solid fa-palette"></i>
+                    </button>
+                </div>
+
+                <!-- Social Icons Bar -->
+                <div class="flex items-center justify-between text-light-gray pt-1">
+                    <a href="#" aria-label="GitHub" class="hover:text-mustard transition-colors text-xs"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" aria-label="Twitter" class="hover:text-mustard transition-colors text-xs"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="https://wa.me/254100326074" target="_blank" aria-label="WhatsApp" class="hover:text-emerald-400 transition-colors text-xs"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="#" aria-label="LinkedIn" class="hover:text-mustard transition-colors text-xs"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+        </aside>
+
+        <!-- RIGHT MAIN CONTENT WRAPPER -->
+        <div class="flex-grow lg:ml-72 w-full max-w-full min-h-screen flex flex-col justify-between">
+
+            <!-- EDITORIAL HEADER BANNER -->
+            <header class="w-full bg-mustard py-6 px-4 sm:px-8 text-center uppercase tracking-widest font-heading font-extrabold text-lg sm:text-2xl shadow-md relative z-10 transition-colors">
+                <div class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4">
+                    <span class="text-black font-black">VICY CAPSLOCK</span>
+                    <span class="hidden sm:inline text-black/40">|</span>
+                    <span class="text-black opacity-90 font-bold text-sm sm:text-xl">SENIOR NETWORK ENGINEER & INFRASTRUCTURE ARCHITECT</span>
+                </div>
+            </header>
+
+            <!-- MAIN CONTENT SECTIONS CONTAINER -->
+            <main class="w-full max-w-5xl mx-auto px-4 sm:px-8 py-8 flex-grow space-y-20">
+
+                <!-- SECTION 1: ABOUT ME HERO -->
+                <section id="about" class="relative pt-6 pb-12 border-b border-dark-gray">
                     
-                    <!-- Giant Ghost Letter A -->
-                    <div class="ghost-letter absolute -top-10 -left-6 text-[140px] sm:text-[180px] text-ghost-gray select-none z-0">
-                        A
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start relative z-10">
+                        
+                        <!-- Left Portrait Column -->
+                        <div class="md:col-span-5 relative group">
+                            <div class="relative w-full max-w-sm mx-auto md:max-w-none">
+                                <!-- Background Glow behind portrait -->
+                                <div class="absolute inset-0 bg-mustard/15 filter blur-xl transform scale-95"></div>
+                                
+                                <!-- Main Cutout Image -->
+                                <div class="relative overflow-hidden cutout-portrait border border-dark-gray">
+                                    <img src="https://i.pinimg.com/736x/b9/09/57/b90957b38f8222de334db733940d2979.jpg" 
+                                         alt="Vicy Capslock" 
+                                         class="w-full h-auto object-cover grayscale contrast-125 hover:grayscale-0 transition-all duration-700 block"
+                                         onerror="this.onerror=null; this.src='https://placehold.co/500x650/111112/E5CC20?text=Vicy+Capslock';">
+                                </div>
+
+                                <!-- Name Overlay Card -->
+                                <div class="absolute bottom-6 left-2 right-2 bg-mustard/95 backdrop-blur-sm p-4 border-l-4 border-black shadow-2xl transition-transform duration-300 transform group-hover:translate-y-[-4px]">
+                                    <h2 class="font-heading font-black text-lg sm:text-xl text-black uppercase tracking-tight">
+                                        NAME: <span class="text-white drop-shadow-sm">VICY CAPSLOCK</span>
+                                    </h2>
+                                    <p class="font-heading text-xs sm:text-sm text-black/90 font-bold tracking-wider uppercase mt-1">
+                                        Senior Network Engineer & Cloud Specialist
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Copy Column -->
+                        <div class="md:col-span-7 relative pt-4 md:pt-2">
+                            
+                            <!-- Giant Ghost Letter A -->
+                            <div class="ghost-letter absolute -top-10 -left-6 text-[140px] sm:text-[180px] text-ghost-gray select-none z-0">
+                                A
+                            </div>
+
+                            <!-- Header & Divider -->
+                            <div class="relative z-10">
+                                <span class="text-xs font-mono text-mustard uppercase tracking-widest block mb-1">Architect & Security Specialist</span>
+                                <h1 class="font-heading font-black text-3xl sm:text-4xl tracking-wider text-light-gray uppercase">
+                                    ABOUT ME
+                                </h1>
+                                <div class="w-full h-[2px] bg-dark-gray my-4 flex items-center">
+                                    <div class="w-16 h-[2px] bg-mustard"></div>
+                                </div>
+                            </div>
+
+                            <!-- Text Paragraphs -->
+                            <div class="relative z-10 text-light-gray/90 text-sm leading-relaxed space-y-4 font-normal mt-6 text-justify">
+                                <p>
+                                    Welcome! I am <strong class="text-white">Vicy Capslock</strong>, a Senior Network Engineer and Infrastructure Architect with over 8 years of experience designing, deploying, and securing mission-critical enterprise networks, hybrid cloud topologies, and global WAN infrastructure.
+                                </p>
+                                <p>
+                                    My engineering focus centres around zero-downtime BGP/OSPF routing architectures, high-performance Cisco and Palo Alto security systems, SD-WAN migrations, dynamic IPsec meshes, and network automation utilizing Python, Ansible, and Infrastructure as Code (IaC).
+                                </p>
+                            </div>
+
+                            <!-- Quick Key Stats Counter Grid -->
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 pt-6 border-t border-dark-gray text-center relative z-10">
+                                <div class="bg-card-black border border-dark-gray p-3">
+                                    <span class="font-heading font-black text-2xl text-mustard block">08+</span>
+                                    <span class="text-[10px] font-mono text-light-gray uppercase tracking-wider">Years Exp.</span>
+                                </div>
+                                <div class="bg-card-black border border-dark-gray p-3">
+                                    <span class="font-heading font-black text-2xl text-mustard block">99.999%</span>
+                                    <span class="text-[10px] font-mono text-light-gray uppercase tracking-wider">Uptime Goal</span>
+                                </div>
+                                <div class="bg-card-black border border-dark-gray p-3">
+                                    <span class="font-heading font-black text-2xl text-mustard block">120+</span>
+                                    <span class="text-[10px] font-mono text-light-gray uppercase tracking-wider">Site Migrations</span>
+                                </div>
+                                <div class="bg-card-black border border-dark-gray p-3">
+                                    <span class="font-heading font-black text-2xl text-mustard block">CCNP</span>
+                                    <span class="text-[10px] font-mono text-light-gray uppercase tracking-wider">Certified</span>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons Row -->
+                            <div class="relative z-10 mt-8 flex flex-wrap items-center gap-4">
+                                <button onclick="downloadCV()" class="btn-sharp rounded-full bg-mustard hover:bg-mustard-hover text-black px-6 py-3 font-heading font-bold text-xs uppercase tracking-wider flex items-center gap-2 shadow-lg transition-transform active:scale-95">
+                                    <i class="fa-solid fa-download text-sm"></i>
+                                    <span>DOWNLOAD RESUME</span>
+                                </button>
+
+                                <a href="https://wa.me/254100326074" target="_blank" rel="noopener" class="btn-sharp bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-3 font-heading font-bold text-xs uppercase tracking-wider flex items-center gap-2 shadow-lg transition-all">
+                                    <i class="fa-brands fa-whatsapp text-base"></i>
+                                    <span>CHAT ON WHATSAPP</span>
+                                </a>
+
+                                <button onclick="openQuoteModal()" class="btn-sharp border border-mustard text-mustard hover:bg-mustard hover:text-black px-6 py-3 font-heading font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all">
+                                    <i class="fa-solid fa-calculator text-sm"></i>
+                                    <span>ESTIMATE AUDIT</span>
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- SECTION 2: SERVICES & CAPABILITIES -->
+                <section id="services" class="relative py-8 border-b border-dark-gray">
+                    <!-- Giant Ghost Letter S -->
+                    <div class="ghost-letter absolute -top-12 -left-6 text-[140px] sm:text-[180px] text-ghost-gray select-none z-0">
+                        S
                     </div>
 
                     <!-- Header & Divider -->
-                    <div class="relative z-10">
-                        <h1 class="font-heading font-black text-3xl sm:text-4xl tracking-wider text-light-gray uppercase">
-                            ABOUT ME
-                        </h1>
+                    <div class="relative z-10 mb-12">
+                        <span class="text-xs font-mono text-mustard uppercase tracking-widest block mb-1">Engineering Services</span>
+                        <h2 class="font-heading font-black text-3xl sm:text-4xl tracking-wider text-light-gray uppercase">
+                            SERVICES & CAPABILITIES
+                        </h2>
                         <div class="w-full h-[2px] bg-dark-gray my-4 flex items-center">
                             <div class="w-16 h-[2px] bg-mustard"></div>
                         </div>
                     </div>
 
-                    <!-- Text Paragraphs -->
-                    <div class="relative z-10 text-light-gray/90 text-sm leading-relaxed space-y-4 font-normal mt-6 text-justify">
-                        <p>
-                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. I specialize in designing and engineering high-impact digital products, editorial user interfaces, and robust visual design systems that merge graphic precision with seamless interaction design.
-                        </p>
-                        <p>
-                            Based on a philosophy of dark aesthetic symmetry and functional minimalism, my work spans cross-platform application design, front-end architecture, and visual branding for forward-thinking creative technology teams worldwide.
-                        </p>
+                    <!-- Services Grid -->
+                    <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+                        
+                        <!-- Service Card 1 -->
+                        <div class="bg-card-black border border-dark-gray p-8 group hover:border-mustard transition-all duration-300 relative overflow-hidden flex flex-col justify-between">
+                            <div>
+                                <div class="text-mustard text-3xl mb-4">
+                                    <i class="fa-solid fa-network-wired"></i>
+                                </div>
+                                <h3 class="font-heading font-bold text-lg text-white uppercase tracking-wider mb-3 group-hover:text-mustard transition-colors">
+                                    Enterprise Routing & Switching
+                                </h3>
+                                <p class="text-xs text-light-gray leading-relaxed mb-6">
+                                    Architecture and provisioning of fault-tolerant enterprise networks using BGP, OSPF, EIGRP, VXLAN/EVPN fabric, and core high-availability switches.
+                                </p>
+                                <ul class="text-[11px] font-mono text-light-gray/70 space-y-1.5 border-t border-dark-gray pt-4 mb-6">
+                                    <li><i class="fa-solid fa-check text-mustard mr-2"></i>Multi-Homed BGP WAN & Path Vector Tuning</li>
+                                    <li><i class="fa-solid fa-check text-mustard mr-2"></i>Cisco Nexus / Catalyst & Juniper Junos Integration</li>
+                                    <li><i class="fa-solid fa-check text-mustard mr-2"></i>Data Center Spacing & VXLAN/EVPN Overlay</li>
+                                </ul>
+                            </div>
+                            <a href="#contact" onclick="preselectService('Enterprise Routing & Switching')" class="text-xs font-heading font-bold text-mustard uppercase tracking-wider flex items-center gap-2 hover:underline">
+                                Request Service <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </a>
+                        </div>
+
+                        <!-- Service Card 2 -->
+                        <div class="bg-card-black border border-dark-gray p-8 group hover:border-mustard transition-all duration-300 relative overflow-hidden flex flex-col justify-between">
+                            <div>
+                                <div class="text-mustard text-3xl mb-4">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                </div>
+                                <h3 class="font-heading font-bold text-lg text-white uppercase tracking-wider mb-3 group-hover:text-mustard transition-colors">
+                                    Network Security & Zero Trust
+                                </h3>
+                                <p class="text-xs text-light-gray leading-relaxed mb-6">
+                                    Deploying Next-Generation Firewalls (NGFW), Zero-Trust Architecture, micro-segmentation, and IPsec VPN connectivity for distributed workforce security.
+                                </p>
+                                <ul class="text-[11px] font-mono text-light-gray/70 space-y-1.5 border-t border-dark-gray pt-4 mb-6">
+                                    <li><i class="fa-solid fa-check text-mustard mr-2"></i>Palo Alto PAN-OS & Fortinet FortiGate Firewalls</li>
+                                    <li><i class="fa-solid fa-check text-mustard mr-2"></i>Cisco ASA / Firepower (FTD) Security Policies</li>
+                                    <li><i class="fa-solid fa-check text-mustard mr-2"></i>Site-to-Site & Remote Access IPsec / SSL VPN</li>
+                                </ul>
+                            </div>
+                            <a href="#contact" onclick="preselectService('Network Security')" class="text-xs font-heading font-bold text-mustard uppercase tracking-wider flex items-center gap-2 hover:underline">
+                                Request Service <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </a>
+                        </div>
+
+                        <!-- Service Card 3 -->
+                        <div class="bg-card-black border border-dark-gray p-8 group hover:border-mustard transition-all duration-300 relative overflow-hidden flex flex-col justify-between">
+                            <div>
+                                <div class="text-mustard text-3xl mb-4">
+                                    <i class="fa-solid fa-cloud font-bold"></i>
+                                </div>
+                                <h3 class="font-heading font-bold text-lg text-white uppercase tracking-wider mb-3 group-hover:text-mustard transition-colors">
+                                    Cloud & SD-WAN Integration
+                                </h3>
+                                <p class="text-xs text-light-gray leading-relaxed mb-6">
+                                    Seamless connectivity bridging on-premise data centers to AWS VPCs, Azure VNets, DirectConnect, ExpressRoute, and software-defined WAN (SD-WAN).
+                                </p>
+                                <ul class="text-[11px] font-mono text-light-gray/70 space-y-1.5 border-t border-dark-gray pt-4 mb-6">
+                                    <li><i class="fa-solid fa-check text-mustard mr-2"></i>AWS Transit Gateway & DirectConnect Architecture</li>
+                                    <li><i class="fa-solid fa-check text-mustard mr-2"></i>Cisco Viptela & Fortinet SD-WAN Deployment</li>
+                                    <li><i class="fa-solid fa-check text-mustard mr-2"></i>Hybrid Cloud Traffic Optimization & Failover</li>
+                                </ul>
+                            </div>
+                            <a href="#contact" onclick="preselectService('Cloud & SD-WAN')" class="text-xs font-heading font-bold text-mustard uppercase tracking-wider flex items-center gap-2 hover:underline">
+                                Request Service <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </a>
+                        </div>
+
+                        <!-- Service Card 4 -->
+                        <div class="bg-card-black border border-dark-gray p-8 group hover:border-mustard transition-all duration-300 relative overflow-hidden flex flex-col justify-between">
+                            <div>
+                                <div class="text-mustard text-3xl mb-4">
+                                    <i class="fa-solid fa-terminal"></i>
+                                </div>
+                                <h3 class="font-heading font-bold text-lg text-white uppercase tracking-wider mb-3 group-hover:text-mustard transition-colors">
+                                    Network Automation & Monitoring
+                                </h3>
+                                <p class="text-xs text-light-gray leading-relaxed mb-6">
+                                    Eliminating configuration drift through IaC, automated deployment playbooks, dynamic telemetry, and enterprise monitoring suites.
+                                </p>
+                                <ul class="text-[11px] font-mono text-light-gray/70 space-y-1.5 border-t border-dark-gray pt-4 mb-6">
+                                    <li><i class="fa-solid fa-check text-mustard mr-2"></i>Python (Netmiko/Nornir) & Ansible Automation</li>
+                                    <li><i class="fa-solid fa-check text-mustard mr-2"></i>NetBox Source of Truth & IPAM Integration</li>
+                                    <li><i class="fa-solid fa-check text-mustard mr-2"></i>SolarWinds, Nagios & Wireshark Packet Analysis</li>
+                                </ul>
+                            </div>
+                            <a href="#contact" onclick="preselectService('Network Automation')" class="text-xs font-heading font-bold text-mustard uppercase tracking-wider flex items-center gap-2 hover:underline">
+                                Request Service <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </a>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- SECTION 3: MY SKILLS & TECH STACK -->
+                <section id="skills" class="relative py-8 border-b border-dark-gray bg-sec-black/40 -mx-4 sm:-mx-8 px-4 sm:px-8">
+                    <div class="max-w-5xl mx-auto relative">
+                        
+                        <!-- Giant Ghost Letter M -->
+                        <div class="ghost-letter absolute -top-12 -left-6 text-[140px] sm:text-[180px] text-ghost-gray select-none z-0">
+                            M
+                        </div>
+
+                        <!-- Header & Divider -->
+                        <div class="relative z-10 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
+                            <div>
+                                <span class="text-xs font-mono text-mustard uppercase tracking-widest block mb-1">Technical Proficiency</span>
+                                <h2 class="font-heading font-black text-3xl sm:text-4xl tracking-wider text-light-gray uppercase">
+                                    TECH MATRIX
+                                </h2>
+                                <div class="w-full sm:w-64 h-[2px] bg-dark-gray my-4 flex items-center">
+                                    <div class="w-16 h-[2px] bg-mustard"></div>
+                                </div>
+                            </div>
+
+                            <!-- Skill Category Filter Tabs -->
+                            <div class="flex gap-2 font-heading text-xs uppercase tracking-wider">
+                                <button onclick="filterSkills('all')" class="skill-tab active bg-mustard text-black px-3 py-1.5 font-bold transition-all">All Protocols</button>
+                                <button onclick="filterSkills('routing')" class="skill-tab bg-dark-gray text-light-gray hover:text-white px-3 py-1.5 font-bold transition-all">Routing & Security</button>
+                                <button onclick="filterSkills('automation')" class="skill-tab bg-dark-gray text-light-gray hover:text-white px-3 py-1.5 font-bold transition-all">Automation & Cloud</button>
+                            </div>
+                        </div>
+
+                        <!-- Skill Gauge Circles Grid -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 relative z-10 text-center mb-12" id="skillsGrid">
+                            
+                            <!-- Skill 1: BGP / OSPF / Routing (96%) -->
+                            <div class="flex flex-col items-center group skill-item" data-category="routing">
+                                <div class="relative w-32 h-32 sm:w-36 sm:h-36 flex items-center justify-center">
+                                    <svg class="w-full h-full" viewBox="0 0 120 120">
+                                        <circle class="text-dark-gray" stroke-width="8" stroke="currentColor" fill="transparent" r="50" cx="60" cy="60" />
+                                        <circle class="text-mustard progress-ring-circle" stroke-width="8" stroke-dasharray="314.15" stroke-dashoffset="314.15" data-percent="96" stroke-linecap="butt" stroke="currentColor" fill="transparent" r="50" cx="60" cy="60" />
+                                    </svg>
+                                    <span class="absolute font-heading font-black text-2xl text-white tracking-tighter">
+                                        96%
+                                    </span>
+                                </div>
+                                <h3 class="mt-4 font-heading font-bold text-xs sm:text-sm text-light-gray uppercase tracking-widest group-hover:text-mustard transition-colors">
+                                    BGP / OSPF / EIGRP
+                                </h3>
+                            </div>
+
+                            <!-- Skill 2: PALO ALTO & CISCO FIREWALLS (92%) -->
+                            <div class="flex flex-col items-center group skill-item" data-category="routing">
+                                <div class="relative w-32 h-32 sm:w-36 sm:h-36 flex items-center justify-center">
+                                    <svg class="w-full h-full" viewBox="0 0 120 120">
+                                        <circle class="text-dark-gray" stroke-width="8" stroke="currentColor" fill="transparent" r="50" cx="60" cy="60" />
+                                        <circle class="text-mustard progress-ring-circle" stroke-width="8" stroke-dasharray="314.15" stroke-dashoffset="314.15" data-percent="92" stroke-linecap="butt" stroke="currentColor" fill="transparent" r="50" cx="60" cy="60" />
+                                    </svg>
+                                    <span class="absolute font-heading font-black text-2xl text-white tracking-tighter">
+                                        92%
+                                    </span>
+                                </div>
+                                <h3 class="mt-4 font-heading font-bold text-xs sm:text-sm text-light-gray uppercase tracking-widest group-hover:text-mustard transition-colors">
+                                    FIREWALLS & IPSEC
+                                </h3>
+                            </div>
+
+                            <!-- Skill 3: PYTHON & ANSIBLE AUTOMATION (88%) -->
+                            <div class="flex flex-col items-center group skill-item" data-category="automation">
+                                <div class="relative w-32 h-32 sm:w-36 sm:h-36 flex items-center justify-center">
+                                    <svg class="w-full h-full" viewBox="0 0 120 120">
+                                        <circle class="text-dark-gray" stroke-width="8" stroke="currentColor" fill="transparent" r="50" cx="60" cy="60" />
+                                        <circle class="text-mustard progress-ring-circle" stroke-width="8" stroke-dasharray="314.15" stroke-dashoffset="314.15" data-percent="88" stroke-linecap="butt" stroke="currentColor" fill="transparent" r="50" cx="60" cy="60" />
+                                    </svg>
+                                    <span class="absolute font-heading font-black text-2xl text-white tracking-tighter">
+                                        88%
+                                    </span>
+                                </div>
+                                <h3 class="mt-4 font-heading font-bold text-xs sm:text-sm text-light-gray uppercase tracking-widest group-hover:text-mustard transition-colors">
+                                    PYTHON & ANSIBLE
+                                </h3>
+                            </div>
+
+                            <!-- Skill 4: CLOUD NETWORKING AWS/AZURE (90%) -->
+                            <div class="flex flex-col items-center group skill-item" data-category="automation">
+                                <div class="relative w-32 h-32 sm:w-36 sm:h-36 flex items-center justify-center">
+                                    <svg class="w-full h-full" viewBox="0 0 120 120">
+                                        <circle class="text-dark-gray" stroke-width="8" stroke="currentColor" fill="transparent" r="50" cx="60" cy="60" />
+                                        <circle class="text-mustard progress-ring-circle" stroke-width="8" stroke-dasharray="314.15" stroke-dashoffset="314.15" data-percent="90" stroke-linecap="butt" stroke="currentColor" fill="transparent" r="50" cx="60" cy="60" />
+                                    </svg>
+                                    <span class="absolute font-heading font-black text-2xl text-white tracking-tighter">
+                                        90%
+                                    </span>
+                                </div>
+                                <h3 class="mt-4 font-heading font-bold text-xs sm:text-sm text-light-gray uppercase tracking-widest group-hover:text-mustard transition-colors">
+                                    AWS / AZURE NETWORKING
+                                </h3>
+                            </div>
+
+                        </div>
+
+                        <!-- Secondary Detailed Tool Badges Grid -->
+                        <div class="relative z-10 pt-6 border-t border-dark-gray">
+                            <h4 class="font-heading font-bold text-xs uppercase tracking-widest text-mustard mb-4">Core Hardware, Software & Protocols</h4>
+                            <div class="flex flex-wrap gap-2 text-xs font-mono">
+                                <span class="bg-card-black border border-dark-gray px-3 py-1.5 text-light-gray">Cisco IOS / XE / NX-OS</span>
+                                <span class="bg-card-black border border-dark-gray px-3 py-1.5 text-light-gray">Juniper Junos</span>
+                                <span class="bg-card-black border border-dark-gray px-3 py-1.5 text-light-gray">Fortinet FortiOS</span>
+                                <span class="bg-card-black border border-dark-gray px-3 py-1.5 text-light-gray">VXLAN / EVPN Fabric</span>
+                                <span class="bg-card-black border border-dark-gray px-3 py-1.5 text-light-gray">MPLS / L3VPN</span>
+                                <span class="bg-card-black border border-dark-gray px-3 py-1.5 text-light-gray">NetBox IPAM</span>
+                                <span class="bg-card-black border border-dark-gray px-3 py-1.5 text-light-gray">Wireshark Analysis</span>
+                                <span class="bg-card-black border border-dark-gray px-3 py-1.5 text-light-gray">Terraform / IaC</span>
+                                <span class="bg-card-black border border-dark-gray px-3 py-1.5 text-light-gray">SD-WAN (Viptela)</span>
+                                <span class="bg-card-black border border-dark-gray px-3 py-1.5 text-light-gray">Nagios / Zabbix / Grafana</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- SECTION 4: FEATURED WORKS / PORTFOLIO -->
+                <section id="works" class="relative py-8 border-b border-dark-gray">
+                    <!-- Giant Ghost Letter P -->
+                    <div class="ghost-letter absolute -top-12 -left-6 text-[140px] sm:text-[180px] text-ghost-gray select-none z-0">
+                        P
                     </div>
 
-                    <!-- Download CV Button & Social Icons -->
-                    <div class="relative z-10 mt-8 flex flex-wrap items-center gap-6">
-                        <!-- Yellow Pill-shaped Download CV Button -->
-                        <button onclick="downloadCV()" class="btn-sharp rounded-full bg-mustard hover:bg-mustard-hover text-black px-6 py-3 font-heading font-bold text-xs uppercase tracking-wider flex items-center gap-2 shadow-lg transition-transform active:scale-95">
-                            <i class="fa-solid fa-download text-sm"></i>
-                            <span>DOWNLOAD CV</span>
-                        </button>
+                    <!-- Header & Divider -->
+                    <div class="relative z-10 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
+                        <div>
+                            <span class="text-xs font-mono text-mustard uppercase tracking-widest block mb-1">Case Studies & Deployments</span>
+                            <h2 class="font-heading font-black text-3xl sm:text-4xl tracking-wider text-light-gray uppercase">
+                                INFRASTRUCTURE PROJECTS
+                            </h2>
+                            <div class="w-full sm:w-64 h-[2px] bg-dark-gray my-4 flex items-center">
+                                <div class="w-16 h-[2px] bg-mustard"></div>
+                            </div>
+                        </div>
 
-                        <button onclick="openQuoteModal()" class="btn-sharp border border-mustard text-mustard hover:bg-mustard hover:text-black px-6 py-3 font-heading font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all">
-                            <i class="fa-solid fa-calculator text-sm"></i>
-                            <span>ESTIMATE PROJECT</span>
-                        </button>
-
-                        <!-- Social Media Icons Row -->
-                        <div class="flex items-center gap-3 text-light-gray">
-                            <a href="#" aria-label="Facebook" class="w-8 h-8 rounded-full border border-dark-gray hover:border-mustard hover:text-mustard flex items-center justify-center transition-colors text-xs">
-                                <i class="fa-brands fa-facebook-f"></i>
-                            </a>
-                            <a href="#" aria-label="Twitter" class="w-8 h-8 rounded-full border border-dark-gray hover:border-mustard hover:text-mustard flex items-center justify-center transition-colors text-xs">
-                                <i class="fa-brands fa-twitter"></i>
-                            </a>
-                            <a href="#" aria-label="Pinterest" class="w-8 h-8 rounded-full border border-dark-gray hover:border-mustard hover:text-mustard flex items-center justify-center transition-colors text-xs">
-                                <i class="fa-brands fa-pinterest-p"></i>
-                            </a>
-                            <a href="#" aria-label="Dribbble" class="w-8 h-8 rounded-full border border-dark-gray hover:border-mustard hover:text-mustard flex items-center justify-center transition-colors text-xs">
-                                <i class="fa-brands fa-dribbble"></i>
-                            </a>
-                            <a href="#" aria-label="LinkedIn" class="w-8 h-8 rounded-full border border-dark-gray hover:border-mustard hover:text-mustard flex items-center justify-center transition-colors text-xs">
-                                <i class="fa-brands fa-linkedin-in"></i>
-                            </a>
+                        <!-- Category Filters -->
+                        <div class="flex flex-wrap gap-2 font-heading text-xs uppercase tracking-wider">
+                            <button onclick="filterProjects('all')" class="project-filter active bg-mustard text-black px-3 py-1.5 font-bold transition-all">All Projects</button>
+                            <button onclick="filterProjects('wan')" class="project-filter bg-dark-gray text-light-gray hover:text-white px-3 py-1.5 font-bold transition-all">WAN & BGP</button>
+                            <button onclick="filterProjects('cloud')" class="project-filter bg-dark-gray text-light-gray hover:text-white px-3 py-1.5 font-bold transition-all">Hybrid Cloud</button>
+                            <button onclick="filterProjects('automation')" class="project-filter bg-dark-gray text-light-gray hover:text-white px-3 py-1.5 font-bold transition-all">Automation</button>
                         </div>
                     </div>
 
-                </div>
+                    <!-- Projects Grid -->
+                    <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projectsGrid">
+                        
+                        <!-- Project 1 -->
+                        <div class="project-card bg-card-black border border-dark-gray overflow-hidden group cursor-pointer" data-category="wan" onclick="openProjectModal(0)">
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=800&auto=format&fit=crop" 
+                                     alt="Global SD-WAN & BGP Migration" 
+                                     class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-black/60 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                                    <span class="opacity-0 group-hover:opacity-100 bg-mustard text-black font-heading font-bold text-xs uppercase tracking-widest px-4 py-2 transition-opacity">
+                                        View Case Study
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <span class="text-[10px] font-mono text-mustard uppercase tracking-widest">WAN • Enterprise Architecture</span>
+                                <h3 class="font-heading font-bold text-base text-white uppercase tracking-tight mt-1 group-hover:text-mustard transition-colors">
+                                    Multi-Site Global SD-WAN & BGP WAN Migration
+                                </h3>
+                                <p class="text-xs text-light-gray/80 mt-2 line-clamp-2">
+                                    Architected a seamless migration for 45 enterprise branch sites across 3 continents to Viptela SD-WAN with dual BGP failover links.
+                                </p>
+                            </div>
+                        </div>
 
-            </div>
-        </section>
+                        <!-- Project 2 -->
+                        <div class="project-card bg-card-black border border-dark-gray overflow-hidden group cursor-pointer" data-category="cloud" onclick="openProjectModal(1)">
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=800&auto=format&fit=crop" 
+                                     alt="Hybrid Cloud Transit Mesh" 
+                                     class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-black/60 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                                    <span class="opacity-0 group-hover:opacity-100 bg-mustard text-black font-heading font-bold text-xs uppercase tracking-widest px-4 py-2 transition-opacity">
+                                        View Case Study
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <span class="text-[10px] font-mono text-mustard uppercase tracking-widest">Hybrid Cloud • Security</span>
+                                <h3 class="font-heading font-bold text-base text-white uppercase tracking-tight mt-1 group-hover:text-mustard transition-colors">
+                                    AWS Transit Gateway & Palo Alto Cloud Mesh
+                                </h3>
+                                <p class="text-xs text-light-gray/80 mt-2 line-clamp-2">
+                                    Designed a centralized Palo Alto VM-Series firewall mesh inspect setup connecting 30+ AWS VPCs via Transit Gateway.
+                                </p>
+                            </div>
+                        </div>
 
-        <!-- SECTION: SERVICES & CAPABILITIES -->
-        <section id="services" class="relative py-20 border-b border-dark-gray">
-            <!-- Giant Ghost Letter S -->
-            <div class="ghost-letter absolute -top-12 -left-6 text-[140px] sm:text-[180px] text-ghost-gray select-none z-0">
-                S
-            </div>
+                        <!-- Project 3 -->
+                        <div class="project-card bg-card-black border border-dark-gray overflow-hidden group cursor-pointer" data-category="automation" onclick="openProjectModal(2)">
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=800&auto=format&fit=crop" 
+                                     alt="Automated Switch Provisioning Pipeline" 
+                                     class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500">
+                                <div class="absolute inset-0 bg-black/60 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                                    <span class="opacity-0 group-hover:opacity-100 bg-mustard text-black font-heading font-bold text-xs uppercase tracking-widest px-4 py-2 transition-opacity">
+                                        View Case Study
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <span class="text-[10px] font-mono text-mustard uppercase tracking-widest">Automation • NetDevOps</span>
+                                <h3 class="font-heading font-bold text-base text-white uppercase tracking-tight mt-1 group-hover:text-mustard transition-colors">
+                                    Ansible & NetBox Zero-Touch Provisioning
+                                </h3>
+                                <p class="text-xs text-light-gray/80 mt-2 line-clamp-2">
+                                    Built an automated CI/CD network provisioning pipeline managing over 200 Cisco switches using Python, Ansible, and NetBox IPAM.
+                                </p>
+                            </div>
+                        </div>
 
-            <!-- Header & Divider -->
-            <div class="relative z-10 mb-12">
-                <h2 class="font-heading font-black text-3xl sm:text-4xl tracking-wider text-light-gray uppercase">
-                    SERVICES
-                </h2>
-                <div class="w-full h-[2px] bg-dark-gray my-4 flex items-center">
-                    <div class="w-16 h-[2px] bg-mustard"></div>
-                </div>
-            </div>
-
-            <!-- Services Grid -->
-            <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6">
-                
-                <!-- Service Card 1 -->
-                <div class="bg-card-black border border-dark-gray p-8 group hover:border-mustard transition-all duration-300 relative overflow-hidden">
-                    <div class="text-mustard text-3xl mb-4">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i>
                     </div>
-                    <h3 class="font-heading font-bold text-lg text-white uppercase tracking-wider mb-3 group-hover:text-mustard transition-colors">
-                        UI/UX Architecture
-                    </h3>
-                    <p class="text-xs text-light-gray leading-relaxed mb-6">
-                        Human-centered product design, interactive wireframing, high-fidelity design systems, and rapid interactive prototyping for complex enterprise software.
-                    </p>
-                    <ul class="text-[11px] font-mono text-light-gray/70 space-y-1.5 border-t border-dark-gray pt-4">
-                        <li><i class="fa-solid fa-check text-mustard mr-2"></i>User Research & Journey Mapping</li>
-                        <li><i class="fa-solid fa-check text-mustard mr-2"></i>Figma Design Systems & Components</li>
-                        <li><i class="fa-solid fa-check text-mustard mr-2"></i>Usability Testing & Analytics</li>
-                    </ul>
-                </div>
+                </section>
 
-                <!-- Service Card 2 -->
-                <div class="bg-card-black border border-dark-gray p-8 group hover:border-mustard transition-all duration-300 relative overflow-hidden">
-                    <div class="text-mustard text-3xl mb-4">
-                        <i class="fa-solid fa-code"></i>
+                <!-- SECTION 5: WORK EXPERIENCE & EDUCATION -->
+                <section id="experience" class="relative py-8 border-b border-dark-gray">
+                    <!-- Giant Ghost Letter E -->
+                    <div class="ghost-letter absolute -top-12 -left-6 text-[140px] sm:text-[180px] text-ghost-gray select-none z-0">
+                        E
                     </div>
-                    <h3 class="font-heading font-bold text-lg text-white uppercase tracking-wider mb-3 group-hover:text-mustard transition-colors">
-                        Front-End Engineering
-                    </h3>
-                    <p class="text-xs text-light-gray leading-relaxed mb-6">
-                        Pixel-perfect implementation using modern JavaScript frameworks, custom HTML5/CSS3 architectures, and fluid responsive design standard compliant builds.
-                    </p>
-                    <ul class="text-[11px] font-mono text-light-gray/70 space-y-1.5 border-t border-dark-gray pt-4">
-                        <li><i class="fa-solid fa-check text-mustard mr-2"></i>React / Next.js / Tailwind CSS</li>
-                        <li><i class="fa-solid fa-check text-mustard mr-2"></i>WebGL & 3D Interactive Canvas</li>
-                        <li><i class="fa-solid fa-check text-mustard mr-2"></i>Core Web Vitals Performance Optimization</li>
-                    </ul>
-                </div>
 
-                <!-- Service Card 3 -->
-                <div class="bg-card-black border border-dark-gray p-8 group hover:border-mustard transition-all duration-300 relative overflow-hidden">
-                    <div class="text-mustard text-3xl mb-4">
-                        <i class="fa-solid fa-swatchbook"></i>
-                    </div>
-                    <h3 class="font-heading font-bold text-lg text-white uppercase tracking-wider mb-3 group-hover:text-mustard transition-colors">
-                        Design Systems & Branding
-                    </h3>
-                    <p class="text-xs text-light-gray leading-relaxed mb-6">
-                        Creating robust, scalable brand design languages, multi-platform style guides, typography hierarchies, and complete visual identities.
-                    </p>
-                    <ul class="text-[11px] font-mono text-light-gray/70 space-y-1.5 border-t border-dark-gray pt-4">
-                        <li><i class="fa-solid fa-check text-mustard mr-2"></i>Component Libraries & Token Systems</li>
-                        <li><i class="fa-solid fa-check text-mustard mr-2"></i>Editorial Visual Identity & Logos</li>
-                        <li><i class="fa-solid fa-check text-mustard mr-2"></i>Brand Governance Guidelines</li>
-                    </ul>
-                </div>
-
-                <!-- Service Card 4 -->
-                <div class="bg-card-black border border-dark-gray p-8 group hover:border-mustard transition-all duration-300 relative overflow-hidden">
-                    <div class="text-mustard text-3xl mb-4">
-                        <i class="fa-solid fa-mobile-screen-button"></i>
-                    </div>
-                    <h3 class="font-heading font-bold text-lg text-white uppercase tracking-wider mb-3 group-hover:text-mustard transition-colors">
-                        Mobile & Application Design
-                    </h3>
-                    <p class="text-xs text-light-gray leading-relaxed mb-6">
-                        Crafting intuitive cross-platform mobile experiences for iOS & Android, focusing on thumb-friendly layouts and micro-interactions.
-                    </p>
-                    <ul class="text-[11px] font-mono text-light-gray/70 space-y-1.5 border-t border-dark-gray pt-4">
-                        <li><i class="fa-solid fa-check text-mustard mr-2"></i>iOS & Android UI Guidelines</li>
-                        <li><i class="fa-solid fa-check text-mustard mr-2"></i>Interactive Haptic Prototypes</li>
-                        <li><i class="fa-solid fa-check text-mustard mr-2"></i>App Store Visual Assets</li>
-                    </ul>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- SECTION 2: MY SKILLS -->
-        <section id="skills" class="relative py-20 border-b border-dark-gray bg-sec-black/40 -mx-4 sm:-mx-8 px-4 sm:px-8">
-            <div class="max-w-5xl mx-auto relative">
-                
-                <!-- Giant Ghost Letter M -->
-                <div class="ghost-letter absolute -top-12 -left-6 text-[140px] sm:text-[180px] text-ghost-gray select-none z-0">
-                    M
-                </div>
-
-                <!-- Header & Divider -->
-                <div class="relative z-10 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
-                    <div>
+                    <!-- Header & Divider -->
+                    <div class="relative z-10 mb-12">
+                        <span class="text-xs font-mono text-mustard uppercase tracking-widest block mb-1">Career Journey</span>
                         <h2 class="font-heading font-black text-3xl sm:text-4xl tracking-wider text-light-gray uppercase">
-                            MY SKILLS
+                            EXPERIENCE & CERTS
                         </h2>
-                        <div class="w-full sm:w-64 h-[2px] bg-dark-gray my-4 flex items-center">
+                        <div class="w-full h-[2px] bg-dark-gray my-4 flex items-center">
                             <div class="w-16 h-[2px] bg-mustard"></div>
                         </div>
                     </div>
 
-                    <!-- Skill Category Filter Tabs -->
-                    <div class="flex gap-2 font-heading text-xs uppercase tracking-wider">
-                        <button onclick="filterSkills('all')" class="skill-tab active bg-mustard text-black px-3 py-1.5 font-bold transition-all">All</button>
-                        <button onclick="filterSkills('engineering')" class="skill-tab bg-dark-gray text-light-gray hover:text-white px-3 py-1.5 font-bold transition-all">Engineering</button>
-                        <button onclick="filterSkills('design')" class="skill-tab bg-dark-gray text-light-gray hover:text-white px-3 py-1.5 font-bold transition-all">Design Tools</button>
-                    </div>
-                </div>
-
-                <!-- Skill Gauge Circles Container -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 relative z-10 text-center" id="skillsGrid">
-                    
-                    <!-- Skill 1: HTML & CSS (95%) -->
-                    <div class="flex flex-col items-center group skill-item" data-category="engineering">
-                        <div class="relative w-36 h-36 flex items-center justify-center">
-                            <svg class="w-full h-full" viewBox="0 0 120 120">
-                                <circle class="text-dark-gray" stroke-width="8" stroke="currentColor" fill="transparent" r="50" cx="60" cy="60" />
-                                <circle class="text-mustard progress-ring-circle" stroke-width="8" stroke-dasharray="314.15" stroke-dashoffset="314.15" data-percent="95" stroke-linecap="butt" stroke="currentColor" fill="transparent" r="50" cx="60" cy="60" />
-                            </svg>
-                            <span class="absolute font-heading font-black text-2xl text-white tracking-tighter">
-                                95%
-                            </span>
-                        </div>
-                        <h3 class="mt-4 font-heading font-bold text-xs sm:text-sm text-light-gray uppercase tracking-widest group-hover:text-mustard transition-colors">
-                            HTML & CSS
-                        </h3>
-                    </div>
-
-                    <!-- Skill 2: BOOTSTRAP / TAILWIND (88%) -->
-                    <div class="flex flex-col items-center group skill-item" data-category="engineering">
-                        <div class="relative w-36 h-36 flex items-center justify-center">
-                            <svg class="w-full h-full" viewBox="0 0 120 120">
-                                <circle class="text-dark-gray" stroke-width="8" stroke="currentColor" fill="transparent" r="50" cx="60" cy="60" />
-                                <circle class="text-mustard progress-ring-circle" stroke-width="8" stroke-dasharray="314.15" stroke-dashoffset="314.15" data-percent="88" stroke-linecap="butt" stroke="currentColor" fill="transparent" r="50" cx="60" cy="60" />
-                            </svg>
-                            <span class="absolute font-heading font-black text-2xl text-white tracking-tighter">
-                                88%
-                            </span>
-                        </div>
-                        <h3 class="mt-4 font-heading font-bold text-xs sm:text-sm text-light-gray uppercase tracking-widest group-hover:text-mustard transition-colors">
-                            TAILWIND / BOOTSTRAP
-                        </h3>
-                    </div>
-
-                    <!-- Skill 3: JAVASCRIPT (82%) -->
-                    <div class="flex flex-col items-center group skill-item" data-category="engineering">
-                        <div class="relative w-36 h-36 flex items-center justify-center">
-                            <svg class="w-full h-full" viewBox="0 0 120 120">
-                                <circle class="text-dark-gray" stroke-width="8" stroke="currentColor" fill="transparent" r="50" cx="60" cy="60" />
-                                <circle class="text-mustard progress-ring-circle" stroke-width="8" stroke-dasharray="314.15" stroke-dashoffset="314.15" data-percent="82" stroke-linecap="butt" stroke="currentColor" fill="transparent" r="50" cx="60" cy="60" />
-                            </svg>
-                            <span class="absolute font-heading font-black text-2xl text-white tracking-tighter">
-                                82%
-                            </span>
-                        </div>
-                        <h3 class="mt-4 font-heading font-bold text-xs sm:text-sm text-light-gray uppercase tracking-widest group-hover:text-mustard transition-colors">
-                            JAVASCRIPT
-                        </h3>
-                    </div>
-
-                    <!-- Skill 4: FIGMA & UI DESIGN (90%) -->
-                    <div class="flex flex-col items-center group skill-item" data-category="design">
-                        <div class="relative w-36 h-36 flex items-center justify-center">
-                            <svg class="w-full h-full" viewBox="0 0 120 120">
-                                <circle class="text-dark-gray" stroke-width="8" stroke="currentColor" fill="transparent" r="50" cx="60" cy="60" />
-                                <circle class="text-mustard progress-ring-circle" stroke-width="8" stroke-dasharray="314.15" stroke-dashoffset="314.15" data-percent="90" stroke-linecap="butt" stroke="currentColor" fill="transparent" r="50" cx="60" cy="60" />
-                            </svg>
-                            <span class="absolute font-heading font-black text-2xl text-white tracking-tighter">
-                                90%
-                            </span>
-                        </div>
-                        <h3 class="mt-4 font-heading font-bold text-xs sm:text-sm text-light-gray uppercase tracking-widest group-hover:text-mustard transition-colors">
-                            FIGMA & UI DESIGN
-                        </h3>
-                    </div>
-
-                </div>
-
-            </div>
-        </section>
-
-        <!-- SECTION: FEATURED WORKS / PORTFOLIO -->
-        <section id="works" class="relative py-20 border-b border-dark-gray">
-            <!-- Giant Ghost Letter P -->
-            <div class="ghost-letter absolute -top-12 -left-6 text-[140px] sm:text-[180px] text-ghost-gray select-none z-0">
-                P
-            </div>
-
-            <!-- Header & Divider -->
-            <div class="relative z-10 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
-                <div>
-                    <h2 class="font-heading font-black text-3xl sm:text-4xl tracking-wider text-light-gray uppercase">
-                        FEATURED WORKS
-                    </h2>
-                    <div class="w-full sm:w-64 h-[2px] bg-dark-gray my-4 flex items-center">
-                        <div class="w-16 h-[2px] bg-mustard"></div>
-                    </div>
-                </div>
-
-                <!-- Category Filters -->
-                <div class="flex flex-wrap gap-2 font-heading text-xs uppercase tracking-wider">
-                    <button onclick="filterProjects('all')" class="project-filter active bg-mustard text-black px-3 py-1.5 font-bold transition-all">All</button>
-                    <button onclick="filterProjects('ui')" class="project-filter bg-dark-gray text-light-gray hover:text-white px-3 py-1.5 font-bold transition-all">UI/UX</button>
-                    <button onclick="filterProjects('web')" class="project-filter bg-dark-gray text-light-gray hover:text-white px-3 py-1.5 font-bold transition-all">Web Apps</button>
-                    <button onclick="filterProjects('branding')" class="project-filter bg-dark-gray text-light-gray hover:text-white px-3 py-1.5 font-bold transition-all">Branding</button>
-                </div>
-            </div>
-
-            <!-- Projects Grid -->
-            <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projectsGrid">
-                
-                <!-- Project 1 -->
-                <div class="project-card bg-card-black border border-dark-gray overflow-hidden group cursor-pointer" data-category="ui" onclick="openProjectModal(0)">
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop" 
-                             alt="Apex FinTech Dashboard" 
-                             class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500">
-                        <div class="absolute inset-0 bg-black/60 group-hover:bg-black/20 transition-colors flex items-center justify-center">
-                            <span class="opacity-0 group-hover:opacity-100 bg-mustard text-black font-heading font-bold text-xs uppercase tracking-widest px-4 py-2 transition-opacity">
-                                View Case Study
-                            </span>
-                        </div>
-                    </div>
-                    <div class="p-5">
-                        <span class="text-[10px] font-mono text-mustard uppercase tracking-widest">UI/UX • FinTech</span>
-                        <h3 class="font-heading font-bold text-base text-white uppercase tracking-tight mt-1 group-hover:text-mustard transition-colors">
-                            Apex Analytics Engine
-                        </h3>
-                        <p class="text-xs text-light-gray/80 mt-2 line-clamp-2">
-                            Next-generation financial data visualization portal engineered for institutional algorithmic traders.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Project 2 -->
-                <div class="project-card bg-card-black border border-dark-gray overflow-hidden group cursor-pointer" data-category="web" onclick="openProjectModal(1)">
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=800&auto=format&fit=crop" 
-                             alt="Kuro Editorial Platform" 
-                             class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500">
-                        <div class="absolute inset-0 bg-black/60 group-hover:bg-black/20 transition-colors flex items-center justify-center">
-                            <span class="opacity-0 group-hover:opacity-100 bg-mustard text-black font-heading font-bold text-xs uppercase tracking-widest px-4 py-2 transition-opacity">
-                                View Case Study
-                            </span>
-                        </div>
-                    </div>
-                    <div class="p-5">
-                        <span class="text-[10px] font-mono text-mustard uppercase tracking-widest">Web App • Editorial</span>
-                        <h3 class="font-heading font-bold text-base text-white uppercase tracking-tight mt-1 group-hover:text-mustard transition-colors">
-                            Kuro Digital Magazine
-                        </h3>
-                        <p class="text-xs text-light-gray/80 mt-2 line-clamp-2">
-                            High-contrast dark mode publishing platform with dynamic custom typography and interactive soundscapes.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Project 3 -->
-                <div class="project-card bg-card-black border border-dark-gray overflow-hidden group cursor-pointer" data-category="branding" onclick="openProjectModal(2)">
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=800&auto=format&fit=crop" 
-                             alt="Veloce Design System" 
-                             class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500">
-                        <div class="absolute inset-0 bg-black/60 group-hover:bg-black/20 transition-colors flex items-center justify-center">
-                            <span class="opacity-0 group-hover:opacity-100 bg-mustard text-black font-heading font-bold text-xs uppercase tracking-widest px-4 py-2 transition-opacity">
-                                View Case Study
-                            </span>
-                        </div>
-                    </div>
-                    <div class="p-5">
-                        <span class="text-[10px] font-mono text-mustard uppercase tracking-widest">Branding • Design Tokens</span>
-                        <h3 class="font-heading font-bold text-base text-white uppercase tracking-tight mt-1 group-hover:text-mustard transition-colors">
-                            Veloce Brand Identity
-                        </h3>
-                        <p class="text-xs text-light-gray/80 mt-2 line-clamp-2">
-                            Unified design architecture and brand guidelines created for an electric supercar manufacturer.
-                        </p>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- SECTION: WORK EXPERIENCE & TIMELINE -->
-        <section id="experience" class="relative py-20 border-b border-dark-gray bg-sec-black/30 -mx-4 sm:-mx-8 px-4 sm:px-8">
-            <div class="max-w-5xl mx-auto relative">
-                <!-- Giant Ghost Letter E -->
-                <div class="ghost-letter absolute -top-12 -left-6 text-[140px] sm:text-[180px] text-ghost-gray select-none z-0">
-                    E
-                </div>
-
-                <!-- Header & Divider -->
-                <div class="relative z-10 mb-12">
-                    <h2 class="font-heading font-black text-3xl sm:text-4xl tracking-wider text-light-gray uppercase">
-                        EXPERIENCE
-                    </h2>
-                    <div class="w-full h-[2px] bg-dark-gray my-4 flex items-center">
-                        <div class="w-16 h-[2px] bg-mustard"></div>
-                    </div>
-                </div>
-
-                <!-- Editorial Timeline Items -->
-                <div class="relative z-10 border-l-2 border-dark-gray ml-4 sm:ml-8 pl-6 sm:pl-10 space-y-12">
-                    
-                    <!-- Item 1 -->
-                    <div class="relative group">
-                        <div class="absolute -left-[31px] sm:-left-[47px] top-1.5 w-4 h-4 bg-mustard border-4 border-main-black rounded-full group-hover:scale-125 transition-transform"></div>
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-                            <h3 class="font-heading font-extrabold text-base sm:text-lg text-white uppercase tracking-tight">
-                                Senior Lead UI/UX Engineer
-                            </h3>
-                            <span class="font-mono text-xs text-mustard bg-card-black border border-dark-gray px-3 py-1 inline-block w-fit">
-                                2023 — PRESENT
-                            </span>
-                        </div>
-                        <div class="text-xs font-heading font-bold text-light-gray uppercase tracking-widest mb-3">
-                            Apex Global Systems • San Francisco, CA
-                        </div>
-                        <p class="text-xs text-light-gray/90 leading-relaxed max-w-2xl">
-                            Spearheaded core design token ecosystem across 14 enterprise web applications. Reduced design-to-development handoff turnaround time by 40% and improved Web Accessibility (WCAG 2.1 AAA) compliance across all digital assets.
-                        </p>
-                    </div>
-
-                    <!-- Item 2 -->
-                    <div class="relative group">
-                        <div class="absolute -left-[31px] sm:-left-[47px] top-1.5 w-4 h-4 bg-dark-gray group-hover:bg-mustard border-4 border-main-black rounded-full group-hover:scale-125 transition-transform"></div>
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-                            <h3 class="font-heading font-extrabold text-base sm:text-lg text-white uppercase tracking-tight">
-                                Product Designer & Front-End Dev
-                            </h3>
-                            <span class="font-mono text-xs text-light-gray bg-card-black border border-dark-gray px-3 py-1 inline-block w-fit">
-                                2020 — 2023
-                            </span>
-                        </div>
-                        <div class="text-xs font-heading font-bold text-light-gray uppercase tracking-widest mb-3">
-                            Glyph Digital Agency • New York, NY
-                        </div>
-                        <p class="text-xs text-light-gray/90 leading-relaxed max-w-2xl">
-                            Designed and built bespoke digital product experiences for luxury fashion and tech clients. Directed visual art direction, front-end architecture, and interactive web motion graphics.
-                        </p>
-                    </div>
-
-                    <!-- Item 3 -->
-                    <div class="relative group">
-                        <div class="absolute -left-[31px] sm:-left-[47px] top-1.5 w-4 h-4 bg-dark-gray group-hover:bg-mustard border-4 border-main-black rounded-full group-hover:scale-125 transition-transform"></div>
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-                            <h3 class="font-heading font-extrabold text-base sm:text-lg text-white uppercase tracking-tight">
-                                Interactive UI Developer
-                            </h3>
-                            <span class="font-mono text-xs text-light-gray bg-card-black border border-dark-gray px-3 py-1 inline-block w-fit">
-                                2017 — 2020
-                            </span>
-                        </div>
-                        <div class="text-xs font-heading font-bold text-light-gray uppercase tracking-widest mb-3">
-                            Horizon Media Studio • Austin, TX
-                        </div>
-                        <p class="text-xs text-light-gray/90 leading-relaxed max-w-2xl">
-                            Created high-converting landing pages, interactive micro-sites, and custom web animations using vanilla JS, SVG, and HTML5 Canvas engines.
-                        </p>
-                    </div>
-
-                </div>
-
-            </div>
-        </section>
-
-        <!-- SECTION 3: REFERENCE (TESTIMONIALS) -->
-        <section id="reference" class="relative py-20 border-b border-dark-gray">
-            
-            <!-- Giant Ghost Letter R -->
-            <div class="ghost-letter absolute -top-12 -left-6 text-[140px] sm:text-[180px] text-ghost-gray select-none z-0">
-                R
-            </div>
-
-            <!-- Header & Divider -->
-            <div class="relative z-10 mb-12">
-                <h2 class="font-heading font-black text-3xl sm:text-4xl tracking-wider text-light-gray uppercase">
-                    REFERENCE
-                </h2>
-                <div class="w-full h-[2px] bg-dark-gray my-4 flex items-center">
-                    <div class="w-16 h-[2px] bg-mustard"></div>
-                </div>
-            </div>
-
-            <!-- Carousel Wrapper Container -->
-            <div class="relative z-10 max-w-xl mx-auto px-4">
-                
-                <div class="relative bg-white text-black p-8 sm:p-10 shadow-2xl rounded-none transition-all duration-300">
-                    
-                    <!-- Overlapping Avatar -->
-                    <div class="absolute -top-10 left-1/2 transform -translate-x-1/2">
-                        <div class="relative w-20 h-20 rounded-full border-4 border-main-black overflow-hidden bg-gray-200 shadow-md">
-                            <img id="testimonial-avatar" 
-                                 src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop" 
-                                 alt="John Doe" 
-                                 class="w-full h-full object-cover">
-                        </div>
-                        <!-- Verified Badge -->
-                        <div class="absolute bottom-0 right-0 w-6 h-6 bg-mustard text-black rounded-full flex items-center justify-center border-2 border-main-black text-[10px]">
-                            <i class="fa-solid fa-check"></i>
-                        </div>
-                    </div>
-
-                    <!-- Testimonial Content -->
-                    <div class="mt-6 text-center">
-                        <p id="testimonial-quote" class="text-xs sm:text-sm italic text-gray-700 leading-relaxed font-body">
-                            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
-                        </p>
-                        <div id="testimonial-author" class="mt-4 font-heading font-extrabold text-sm uppercase tracking-wider text-black">
-                            — John Doe
-                        </div>
-                        <div id="testimonial-role" class="text-[10px] font-heading font-semibold tracking-widest text-gray-500 uppercase">
-                            Senior Tech Lead, Apex Studio
-                        </div>
-                    </div>
-
-                    <!-- Left Slider Arrow Tab -->
-                    <button onclick="prevTestimonial()" aria-label="Previous Testimonial" class="absolute -left-5 top-1/2 transform -translate-y-1/2 bg-dark-gray hover:bg-black text-white w-10 h-14 flex items-center justify-center transition-colors shadow-lg group">
-                        <i class="fa-solid fa-chevron-left text-sm group-hover:-translate-x-0.5 transition-transform"></i>
-                    </button>
-
-                    <!-- Right Slider Arrow Tab (Yellow Accent) -->
-                    <button onclick="nextTestimonial()" aria-label="Next Testimonial" class="absolute -right-5 top-1/2 transform -translate-y-1/2 bg-mustard hover:bg-mustard-hover text-black w-10 h-14 flex items-center justify-center transition-colors shadow-lg group">
-                        <i class="fa-solid fa-chevron-right text-sm group-hover:translate-x-0.5 transition-transform"></i>
-                    </button>
-
-                </div>
-
-            </div>
-
-        </section>
-
-        <!-- SECTION 4: CONTACT ME -->
-        <section id="contact" class="relative py-20">
-            
-            <!-- Giant Ghost Letter C -->
-            <div class="ghost-letter absolute -top-12 -left-6 text-[140px] sm:text-[180px] text-ghost-gray select-none z-0">
-                C
-            </div>
-
-            <!-- Header & Divider -->
-            <div class="relative z-10 mb-10">
-                <h2 class="font-heading font-black text-3xl sm:text-4xl tracking-wider text-light-gray uppercase">
-                    CONTACT ME
-                </h2>
-                <div class="w-full h-[2px] bg-dark-gray my-4 flex items-center">
-                    <div class="w-16 h-[2px] bg-mustard"></div>
-                </div>
-            </div>
-
-            <!-- Contact Information Row -->
-            <div class="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center mb-10">
-                
-                <!-- Small Circular Avatar Cutout -->
-                <div class="md:col-span-3 flex justify-center md:justify-start">
-                    <div class="w-24 h-24 rounded-full border-2 border-mustard overflow-hidden shadow-lg p-1 bg-dark-gray">
-                        <img src="https://i.pinimg.com/736x/b9/09/57/b90957b38f8222de334db733940d2979.jpg" 
-                             alt="Victor Profile" 
-                             class="w-full h-full object-cover rounded-full grayscale">
-                    </div>
-                </div>
-
-                <!-- Info Columns (Phone, Email, Website) -->
-                <div class="md:col-span-9 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center sm:text-left">
-                    
-                    <!-- Phone -->
-                    <div class="space-y-1">
-                        <div class="flex items-center justify-center sm:justify-start gap-2 text-mustard font-heading font-bold text-xs uppercase tracking-wider">
-                            <i class="fa-solid fa-phone"></i>
-                            <span>PHONE</span>
-                        </div>
-                        <p class="text-xs text-light-gray font-mono">+254 100 326 074</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 relative z-10">
                         
-                    </div>
+                        <!-- Work Experience Column -->
+                        <div>
+                            <h3 class="font-heading font-bold text-base text-mustard uppercase tracking-wider mb-6 flex items-center gap-2">
+                                <i class="fa-solid fa-briefcase"></i> Work History
+                            </h3>
 
-                    <!-- Email -->
-                    <div class="space-y-1">
-                        <div class="flex items-center justify-center sm:justify-start gap-2 text-mustard font-heading font-bold text-xs uppercase tracking-wider">
-                            <i class="fa-solid fa-envelope"></i>
-                            <span>E-MAIL</span>
+                            <div class="border-l-2 border-dark-gray ml-2 pl-6 space-y-8">
+                                <!-- Item 1 -->
+                                <div class="relative group">
+                                    <div class="absolute -left-[31px] top-1.5 w-3.5 h-3.5 bg-mustard border-4 border-main-black rounded-full group-hover:scale-125 transition-transform"></div>
+                                    <div class="flex items-center justify-between gap-1 mb-1">
+                                        <h4 class="font-heading font-extrabold text-sm text-white uppercase tracking-tight">
+                                            Senior Network Architect
+                                        </h4>
+                                        <span class="font-mono text-[10px] text-mustard bg-card-black border border-dark-gray px-2 py-0.5">
+                                            2023 — PRESENT
+                                        </span>
+                                    </div>
+                                    <div class="text-[11px] font-heading font-semibold text-light-gray uppercase tracking-widest mb-2">
+                                        Apex Enterprise Networks • San Francisco, CA
+                                    </div>
+                                    <p class="text-xs text-light-gray/80 leading-relaxed">
+                                        Supervised core datacentre spine-and-leaf infrastructure, SD-WAN interconnects, and multi-cloud BGP routing topology across 5 global hubs.
+                                    </p>
+                                </div>
+
+                                <!-- Item 2 -->
+                                <div class="relative group">
+                                    <div class="absolute -left-[31px] top-1.5 w-3.5 h-3.5 bg-dark-gray group-hover:bg-mustard border-4 border-main-black rounded-full group-hover:scale-125 transition-transform"></div>
+                                    <div class="flex items-center justify-between gap-1 mb-1">
+                                        <h4 class="font-heading font-extrabold text-sm text-white uppercase tracking-tight">
+                                            Network Security Engineer
+                                        </h4>
+                                        <span class="font-mono text-[10px] text-light-gray bg-card-black border border-dark-gray px-2 py-0.5">
+                                            2020 — 2023
+                                        </span>
+                                    </div>
+                                    <div class="text-[11px] font-heading font-semibold text-light-gray uppercase tracking-widest mb-2">
+                                        Glyph Tech Solutions • New York, NY
+                                    </div>
+                                    <p class="text-xs text-light-gray/80 leading-relaxed">
+                                        Managed enterprise Palo Alto and Cisco ASA firewalls, engineered IPsec VPN tunnels, and enforced Zero-Trust network access (ZTNA) control policies.
+                                    </p>
+                                </div>
+
+                                <!-- Item 3 -->
+                                <div class="relative group">
+                                    <div class="absolute -left-[31px] top-1.5 w-3.5 h-3.5 bg-dark-gray group-hover:bg-mustard border-4 border-main-black rounded-full group-hover:scale-125 transition-transform"></div>
+                                    <div class="flex items-center justify-between gap-1 mb-1">
+                                        <h4 class="font-heading font-extrabold text-sm text-white uppercase tracking-tight">
+                                            Network Support Specialist
+                                        </h4>
+                                        <span class="font-mono text-[10px] text-light-gray bg-card-black border border-dark-gray px-2 py-0.5">
+                                            2017 — 2020
+                                        </span>
+                                    </div>
+                                    <div class="text-[11px] font-heading font-semibold text-light-gray uppercase tracking-widest mb-2">
+                                        Horizon Telecom Studio • Austin, TX
+                                    </div>
+                                    <p class="text-xs text-light-gray/80 leading-relaxed">
+                                        Maintained Tier-2 layer 2/3 LAN/WAN switching, VLAN partitioning, Wireshark packet analysis, and router interface troubleshooting.
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                        <p class="text-xs text-light-gray font-mono">vicycapslock@gmail.com</p>
+
+                        <!-- Education & Certifications Column -->
+                        <div>
+                            <h3 class="font-heading font-bold text-base text-mustard uppercase tracking-wider mb-6 flex items-center gap-2">
+                                <i class="fa-solid fa-graduation-cap"></i> Certifications & Education
+                            </h3>
+
+                            <div class="border-l-2 border-dark-gray ml-2 pl-6 space-y-8">
+                                <!-- Cert 1 -->
+                                <div class="relative group">
+                                    <div class="absolute -left-[31px] top-1.5 w-3.5 h-3.5 bg-mustard border-4 border-main-black rounded-full group-hover:scale-125 transition-transform"></div>
+                                    <div class="flex items-center justify-between gap-1 mb-1">
+                                        <h4 class="font-heading font-extrabold text-sm text-white uppercase tracking-tight">
+                                            Cisco Certified Network Professional (CCNP)
+                                        </h4>
+                                        <span class="font-mono text-[10px] text-mustard bg-card-black border border-dark-gray px-2 py-0.5">
+                                            ACTIVE
+                                        </span>
+                                    </div>
+                                    <div class="text-[11px] font-heading font-semibold text-light-gray uppercase tracking-widest mb-2">
+                                        Cisco Systems • Enterprise Specialization
+                                    </div>
+                                    <p class="text-xs text-light-gray/80 leading-relaxed">
+                                        Advanced expertise in ENCOR (Enterprise Network Core) & ENARSI (Advanced Routing & Services).
+                                    </p>
+                                </div>
+
+                                <!-- Cert 2 -->
+                                <div class="relative group">
+                                    <div class="absolute -left-[31px] top-1.5 w-3.5 h-3.5 bg-dark-gray group-hover:bg-mustard border-4 border-main-black rounded-full group-hover:scale-125 transition-transform"></div>
+                                    <div class="flex items-center justify-between gap-1 mb-1">
+                                        <h4 class="font-heading font-extrabold text-sm text-white uppercase tracking-tight">
+                                            AWS Certified Advanced Networking - Specialty
+                                        </h4>
+                                        <span class="font-mono text-[10px] text-light-gray bg-card-black border border-dark-gray px-2 py-0.5">
+                                            ACTIVE
+                                        </span>
+                                    </div>
+                                    <div class="text-[11px] font-heading font-semibold text-light-gray uppercase tracking-widest mb-2">
+                                        Amazon Web Services
+                                    </div>
+                                    <p class="text-xs text-light-gray/80 leading-relaxed">
+                                        Specialist certification for complex AWS cloud networking, Transit Gateways, DirectConnect, and hybrid architectures.
+                                    </p>
+                                </div>
+
+                                <!-- Edu 1 -->
+                                <div class="relative group">
+                                    <div class="absolute -left-[31px] top-1.5 w-3.5 h-3.5 bg-dark-gray group-hover:bg-mustard border-4 border-main-black rounded-full group-hover:scale-125 transition-transform"></div>
+                                    <div class="flex items-center justify-between gap-1 mb-1">
+                                        <h4 class="font-heading font-extrabold text-sm text-white uppercase tracking-tight">
+                                            B.S. Network & Systems Engineering
+                                        </h4>
+                                        <span class="font-mono text-[10px] text-light-gray bg-card-black border border-dark-gray px-2 py-0.5">
+                                            2013 — 2017
+                                        </span>
+                                    </div>
+                                    <div class="text-[11px] font-heading font-semibold text-light-gray uppercase tracking-widest mb-2">
+                                        Institute of Technology & Telecommunications
+                                    </div>
+                                    <p class="text-xs text-light-gray/80 leading-relaxed">
+                                        First Class Honors. Major in Telecommunications, Protocol Design, and Information Security.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- SECTION 6: REFERENCE (TESTIMONIALS) -->
+                <section id="reference" class="relative py-8 border-b border-dark-gray">
                     
+                    <!-- Giant Ghost Letter R -->
+                    <div class="ghost-letter absolute -top-12 -left-6 text-[140px] sm:text-[180px] text-ghost-gray select-none z-0">
+                        R
                     </div>
 
-                    <!-- Website -->
-                    <div class="space-y-1">
-                        <div class="flex items-center justify-center sm:justify-start gap-2 text-mustard font-heading font-bold text-xs uppercase tracking-wider">
-                            <i class="fa-solid fa-globe"></i>
-                            <span>WEBSITE</span>
+                    <!-- Header & Divider -->
+                    <div class="relative z-10 mb-12">
+                        <span class="text-xs font-mono text-mustard uppercase tracking-widest block mb-1">Endorsements</span>
+                        <h2 class="font-heading font-black text-3xl sm:text-4xl tracking-wider text-light-gray uppercase">
+                            REFERENCES & REVIEWS
+                        </h2>
+                        <div class="w-full h-[2px] bg-dark-gray my-4 flex items-center">
+                            <div class="w-16 h-[2px] bg-mustard"></div>
                         </div>
-                        <p class="text-xs text-light-gray font-mono">www.victorcapslock.vercel.com</p>
+                    </div>
+
+                    <!-- Carousel Wrapper Container -->
+                    <div class="relative z-10 max-w-xl mx-auto px-4 mb-12">
+                        
+                        <div class="relative bg-white text-black p-8 sm:p-10 shadow-2xl rounded-none transition-all duration-300">
+                            
+                            <!-- Overlapping Avatar -->
+                            <div class="absolute -top-10 left-1/2 transform -translate-x-1/2">
+                                <div class="relative w-20 h-20 rounded-full border-4 border-main-black overflow-hidden bg-gray-200 shadow-md">
+                                    <img id="testimonial-avatar" 
+                                         src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop" 
+                                         alt="John Doe" 
+                                         class="w-full h-full object-cover">
+                                </div>
+                                <!-- Verified Badge -->
+                                <div class="absolute bottom-0 right-0 w-6 h-6 bg-mustard text-black rounded-full flex items-center justify-center border-2 border-main-black text-[10px]">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                            </div>
+
+                            <!-- Testimonial Content -->
+                            <div class="mt-6 text-center">
+                                <p id="testimonial-quote" class="text-xs sm:text-sm italic text-gray-700 leading-relaxed font-body">
+                                    "Vicy migrated our entire multi-region network infrastructure with zero unplanned downtime. His grasp of BGP route tuning and network automation saved our team hundreds of operational hours."
+                                </p>
+                                <div id="testimonial-author" class="mt-4 font-heading font-extrabold text-sm uppercase tracking-wider text-black">
+                                    — Alex Mercer
+                                </div>
+                                <div id="testimonial-role" class="text-[10px] font-heading font-semibold tracking-widest text-gray-500 uppercase">
+                                    VP of Infrastructure, Apex Global
+                                </div>
+                            </div>
+
+                            <!-- Left Slider Arrow Tab -->
+                            <button onclick="prevTestimonial()" aria-label="Previous Testimonial" class="absolute -left-5 top-1/2 transform -translate-y-1/2 bg-dark-gray hover:bg-black text-white w-10 h-14 flex items-center justify-center transition-colors shadow-lg group">
+                                <i class="fa-solid fa-chevron-left text-sm group-hover:-translate-x-0.5 transition-transform"></i>
+                            </button>
+
+                            <!-- Right Slider Arrow Tab (Yellow Accent) -->
+                            <button onclick="nextTestimonial()" aria-label="Next Testimonial" class="absolute -right-5 top-1/2 transform -translate-y-1/2 bg-mustard hover:bg-mustard-hover text-black w-10 h-14 flex items-center justify-center transition-colors shadow-lg group">
+                                <i class="fa-solid fa-chevron-right text-sm group-hover:translate-x-0.5 transition-transform"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Client Brand Logos Grid -->
+                    <div class="relative z-10 pt-6 border-t border-dark-gray">
+                        <p class="text-center font-heading font-bold text-[10px] uppercase tracking-widest text-light-gray/60 mb-6">Brands & Tech Organizations Worked With</p>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 opacity-70 grayscale hover:grayscale-0 transition-all text-center">
+                            <div class="bg-card-black border border-dark-gray py-3 font-heading font-black text-xs text-light-gray uppercase tracking-widest">APEX NETWORKS</div>
+                            <div class="bg-card-black border border-dark-gray py-3 font-heading font-black text-xs text-light-gray uppercase tracking-widest">GLYPH TELECOM</div>
+                            <div class="bg-card-black border border-dark-gray py-3 font-heading font-black text-xs text-light-gray uppercase tracking-widest">CISCO LABS</div>
+                            <div class="bg-card-black border border-dark-gray py-3 font-heading font-black text-xs text-light-gray uppercase tracking-widest">CLOUD MESH</div>
+                        </div>
+                    </div>
+
+                </section>
+
+                <!-- SECTION 7: EDITORIAL ARTICLES / INSIGHTS -->
+                <section id="insights" class="relative py-8 border-b border-dark-gray">
+                    <!-- Giant Ghost Letter I -->
+                    <div class="ghost-letter absolute -top-12 -left-6 text-[140px] sm:text-[180px] text-ghost-gray select-none z-0">
+                        I
+                    </div>
+
+                    <!-- Header & Divider -->
+                    <div class="relative z-10 mb-12">
+                        <span class="text-xs font-mono text-mustard uppercase tracking-widest block mb-1">Thought Leadership</span>
+                        <h2 class="font-heading font-black text-3xl sm:text-4xl tracking-wider text-light-gray uppercase">
+                            ARTICLES & INSIGHTS
+                        </h2>
+                        <div class="w-full h-[2px] bg-dark-gray my-4 flex items-center">
+                            <div class="w-16 h-[2px] bg-mustard"></div>
+                        </div>
+                    </div>
+
+                    <!-- Articles Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+                        <!-- Article 1 -->
+                        <article class="bg-card-black border border-dark-gray p-6 flex flex-col justify-between group hover:border-mustard transition-colors">
+                            <div>
+                                <span class="text-[10px] font-mono text-mustard uppercase tracking-widest">BGP Routing • 6 min read</span>
+                                <h3 class="font-heading font-bold text-base text-white uppercase tracking-tight mt-2 mb-3 group-hover:text-mustard transition-colors">
+                                    Optimizing Multi-Homed BGP Path Selection
+                                </h3>
+                                <p class="text-xs text-light-gray/80 line-clamp-3">
+                                    Detailed guide on tuning MED, Local Preference, and AS-PATH prepending for deterministic outbound and inbound traffic flow.
+                                </p>
+                            </div>
+                            <button onclick="readArticle(1)" class="mt-6 text-xs font-heading font-bold text-mustard uppercase tracking-wider flex items-center gap-2 hover:underline">
+                                Read Article <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                        </article>
+
+                        <!-- Article 2 -->
+                        <article class="bg-card-black border border-dark-gray p-6 flex flex-col justify-between group hover:border-mustard transition-colors">
+                            <div>
+                                <span class="text-[10px] font-mono text-mustard uppercase tracking-widest">Automation • 8 min read</span>
+                                <h3 class="font-heading font-bold text-base text-white uppercase tracking-tight mt-2 mb-3 group-hover:text-mustard transition-colors">
+                                    NetBox & Ansible Driven Dynamic Inventory
+                                </h3>
+                                <p class="text-xs text-light-gray/80 line-clamp-3">
+                                    How to leverage NetBox as a Source of Truth to auto-generate Ansible playbooks for zero-touch router deployments.
+                                </p>
+                            </div>
+                            <button onclick="readArticle(2)" class="mt-6 text-xs font-heading font-bold text-mustard uppercase tracking-wider flex items-center gap-2 hover:underline">
+                                Read Article <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                        </article>
+
+                        <!-- Article 3 -->
+                        <article class="bg-card-black border border-dark-gray p-6 flex flex-col justify-between group hover:border-mustard transition-colors">
+                            <div>
+                                <span class="text-[10px] font-mono text-mustard uppercase tracking-widest">Cloud Security • 5 min read</span>
+                                <h3 class="font-heading font-bold text-base text-white uppercase tracking-tight mt-2 mb-3 group-hover:text-mustard transition-colors">
+                                    Zero-Trust Firewalling in AWS Transit Gateway
+                                </h3>
+                                <p class="text-xs text-light-gray/80 line-clamp-3">
+                                    Structuring inspection VPCs with Palo Alto VM-Series firewalls to enforce strict east-west microsegmentation.
+                                </p>
+                            </div>
+                            <button onclick="readArticle(3)" class="mt-6 text-xs font-heading font-bold text-mustard uppercase tracking-wider flex items-center gap-2 hover:underline">
+                                Read Article <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                        </article>
+                    </div>
+
+                </section>
+
+                <!-- SECTION 8: FAQ ACCORDION -->
+                <section id="faq" class="relative py-8 border-b border-dark-gray">
+                    <!-- Giant Ghost Letter F -->
+                    <div class="ghost-letter absolute -top-12 -left-6 text-[140px] sm:text-[180px] text-ghost-gray select-none z-0">
+                        F
+                    </div>
+
+                    <!-- Header & Divider -->
+                    <div class="relative z-10 mb-10">
+                        <span class="text-xs font-mono text-mustard uppercase tracking-widest block mb-1">Common Questions</span>
+                        <h2 class="font-heading font-black text-3xl sm:text-4xl tracking-wider text-light-gray uppercase">
+                            FREQUENTLY ASKED
+                        </h2>
+                        <div class="w-full h-[2px] bg-dark-gray my-4 flex items-center">
+                            <div class="w-16 h-[2px] bg-mustard"></div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Accordion Items -->
+                    <div class="space-y-4 max-w-3xl mx-auto relative z-10">
+                        
+                        <!-- FAQ 1 -->
+                        <div class="bg-card-black border border-dark-gray overflow-hidden">
+                            <button onclick="toggleFaq(1)" class="w-full px-6 py-4 text-left flex items-center justify-between font-heading font-bold text-sm text-white uppercase tracking-wider hover:text-mustard transition-colors">
+                                <span>Can you perform network migrations without downtime?</span>
+                                <i id="faqIcon-1" class="fa-solid fa-plus text-mustard"></i>
+                            </button>
+                            <div id="faqAnswer-1" class="hidden px-6 pb-4 text-xs text-light-gray/90 leading-relaxed border-t border-dark-gray pt-3">
+                                Absolutely. By preparing parallel routing paths, tuning BGP metrics (Local-Pref / AS-Path), and utilizing VRRP/HSRP failover pairs, migrations are executed with zero impact to live enterprise production traffic.
+                            </div>
+                        </div>
+
+                        <!-- FAQ 2 -->
+                        <div class="bg-card-black border border-dark-gray overflow-hidden">
+                            <button onclick="toggleFaq(2)" class="w-full px-6 py-4 text-left flex items-center justify-between font-heading font-bold text-sm text-white uppercase tracking-wider hover:text-mustard transition-colors">
+                                <span>How do we communicate during network troubleshooting or projects?</span>
+                                <i id="faqIcon-2" class="fa-solid fa-plus text-mustard"></i>
+                            </button>
+                            <div id="faqAnswer-2" class="hidden px-6 pb-4 text-xs text-light-gray/90 leading-relaxed border-t border-dark-gray pt-3">
+                                Direct communication is conducted via <strong>WhatsApp (+254 100 326 074)</strong>, Phone, Email, or Slack. High-priority outage support is monitored 24/7.
+                            </div>
+                        </div>
+
+                        <!-- FAQ 3 -->
+                        <div class="bg-card-black border border-dark-gray overflow-hidden">
+                            <button onclick="toggleFaq(3)" class="w-full px-6 py-4 text-left flex items-center justify-between font-heading font-bold text-sm text-white uppercase tracking-wider hover:text-mustard transition-colors">
+                                <span>Do you support multi-vendor environments?</span>
+                                <i id="faqIcon-3" class="fa-solid fa-plus text-mustard"></i>
+                            </button>
+                            <div id="faqAnswer-3" class="hidden px-6 pb-4 text-xs text-light-gray/90 leading-relaxed border-t border-dark-gray pt-3">
+                                Yes! I am experienced across Cisco (IOS, NX-OS), Juniper (Junos), Palo Alto Networks, Fortinet (FortiOS), Arista, and cloud provider networks (AWS VPC & Azure ExpressRoute).
+                            </div>
+                        </div>
+
+                        <!-- FAQ 4 -->
+                        <div class="bg-card-black border border-dark-gray overflow-hidden">
+                            <button onclick="toggleFaq(4)" class="w-full px-6 py-4 text-left flex items-center justify-between font-heading font-bold text-sm text-white uppercase tracking-wider hover:text-mustard transition-colors">
+                                <span>What are your consulting engagement terms?</span>
+                                <i id="faqIcon-4" class="fa-solid fa-plus text-mustard"></i>
+                            </button>
+                            <div id="faqAnswer-4" class="hidden px-6 pb-4 text-xs text-light-gray/90 leading-relaxed border-t border-dark-gray pt-3">
+                                Engagements are available on a project-basis, milestone billing, or ongoing network retainer. Initial network audits include a full topology diagram and security assessment report.
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- SECTION 9: CONTACT ME & WHATSAPP INTEGRATION -->
+                <section id="contact" class="relative py-8">
+                    
+                    <!-- Giant Ghost Letter C -->
+                    <div class="ghost-letter absolute -top-12 -left-6 text-[140px] sm:text-[180px] text-ghost-gray select-none z-0">
+                        C
+                    </div>
+
+                    <!-- Header & Divider -->
+                    <div class="relative z-10 mb-10">
+                        <span class="text-xs font-mono text-mustard uppercase tracking-widest block mb-1">Direct WhatsApp Connection</span>
+                        <h2 class="font-heading font-black text-3xl sm:text-4xl tracking-wider text-light-gray uppercase">
+                            GET IN TOUCH
+                        </h2>
+                        <div class="w-full h-[2px] bg-dark-gray my-4 flex items-center">
+                            <div class="w-16 h-[2px] bg-mustard"></div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Details Bar -->
+                    <div class="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-6 items-center mb-10 bg-card-black border border-dark-gray p-6">
+                        
+                        <!-- Small Avatar Cutout -->
+                        <div class="md:col-span-3 flex justify-center md:justify-start">
+                            <div class="w-20 h-20 rounded-full border-2 border-mustard overflow-hidden shadow-lg p-1 bg-dark-gray">
+                                <img src="https://i.pinimg.com/736x/b9/09/57/b90957b38f8222de334db733940d2979.jpg" 
+                                     alt="Vicy Profile" 
+                                     class="w-full h-full object-cover rounded-full grayscale">
+                            </div>
+                        </div>
+
+                        <!-- Info Columns (Phone / WhatsApp, Email, Location) -->
+                        <div class="md:col-span-9 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center sm:text-left">
+                            
+                            <!-- WhatsApp / Phone -->
+                            <div class="space-y-1">
+                                <div class="flex items-center justify-center sm:justify-start gap-2 text-emerald-400 font-heading font-bold text-xs uppercase tracking-wider">
+                                    <i class="fa-brands fa-whatsapp text-sm"></i>
+                                    <span>WHATSAPP / PHONE</span>
+                                </div>
+                                <a href="https://wa.me/254100326074" target="_blank" class="text-xs text-white font-mono hover:text-mustard transition-colors block">
+                                    +254 100 326 074
+                                </a>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="space-y-1">
+                                <div class="flex items-center justify-center sm:justify-start gap-2 text-mustard font-heading font-bold text-xs uppercase tracking-wider">
+                                    <i class="fa-solid fa-envelope"></i>
+                                    <span>E-MAIL</span>
+                                </div>
+                                <a href="mailto:vicycapslock@gmail.com" class="text-xs text-white font-mono hover:text-mustard transition-colors block">
+                                    vicycapslock@gmail.com
+                                </a>
+                            </div>
+
+                            <!-- Location -->
+                            <div class="space-y-1">
+                                <div class="flex items-center justify-center sm:justify-start gap-2 text-mustard font-heading font-bold text-xs uppercase tracking-wider">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <span>NETWORK LAB LOCATION</span>
+                                </div>
+                                <p class="text-xs text-light-gray font-mono">Nairobi, Kenya / Global Remote</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Two Column Area: Map & WhatsApp Integrated Contact Form -->
+                    <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+                        
+                        <!-- Left: Stylized Map Canvas / Vector Map Graphic -->
+                        <div class="relative w-full h-72 md:h-full min-h-[320px] bg-sec-black border border-dark-gray overflow-hidden flex flex-col justify-between">
+                            <canvas id="mapCanvas" class="w-full h-full block absolute inset-0"></canvas>
+                            
+                            <!-- Map Badge Overlay -->
+                            <div class="relative z-10 p-4">
+                                <div class="inline-flex items-center bg-main-black/90 px-3 py-1.5 text-[10px] font-heading uppercase tracking-widest text-mustard border border-dark-gray">
+                                    <i class="fa-solid fa-server mr-1.5"></i> Primary Network NOC / Lab Location
+                                </div>
+                            </div>
+
+                            <!-- Direct WhatsApp Action Box Overlay -->
+                            <div class="relative z-10 p-4 bg-card-black/90 border-t border-dark-gray backdrop-blur-sm space-y-2">
+                                <p class="text-[11px] font-heading font-bold text-white uppercase tracking-wider">Need Immediate Network Assistance?</p>
+                                <p class="text-[10px] text-light-gray">Click below to start an instant WhatsApp conversation with Vicy directly.</p>
+                                <a href="https://wa.me/254100326074" target="_blank" rel="noopener" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-2.5 px-4 font-heading font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md">
+                                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                                    <span>OPEN DIRECT WHATSAPP CHAT</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Right: WhatsApp Integrated Contact Form -->
+                        <div class="bg-card-black border border-dark-gray p-6 sm:p-8">
+                            <h3 class="font-heading font-black text-lg text-white uppercase tracking-wider mb-1">
+                                SEND CONSULTING INQUIRY
+                            </h3>
+                            <p class="text-xs text-light-gray mb-6">
+                                Submitting this form opens WhatsApp pre-filled with your network infrastructure requirement details.
+                            </p>
+
+                            <form id="contactForm" onsubmit="handleWhatsAppFormSubmit(event)" class="space-y-4">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="name" class="block text-[10px] font-heading uppercase text-mustard tracking-wider mb-1">Your Name / Organization *</label>
+                                        <input type="text" id="name" required placeholder="John Doe" 
+                                               class="w-full bg-white text-black px-3.5 py-2.5 text-xs font-body outline-none focus:ring-2 focus:ring-mustard border-none placeholder:text-gray-400">
+                                    </div>
+                                    <div>
+                                        <label for="phone" class="block text-[10px] font-heading uppercase text-mustard tracking-wider mb-1">Phone / WhatsApp *</label>
+                                        <input type="tel" id="phone" required placeholder="+1 234 567 890" 
+                                               class="w-full bg-white text-black px-3.5 py-2.5 text-xs font-body outline-none focus:ring-2 focus:ring-mustard border-none placeholder:text-gray-400">
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="email" class="block text-[10px] font-heading uppercase text-mustard tracking-wider mb-1">Work Email Address *</label>
+                                        <input type="email" id="email" required placeholder="john@company.com" 
+                                               class="w-full bg-white text-black px-3.5 py-2.5 text-xs font-body outline-none focus:ring-2 focus:ring-mustard border-none placeholder:text-gray-400">
+                                    </div>
+                                    <div>
+                                        <label for="subject" class="block text-[10px] font-heading uppercase text-mustard tracking-wider mb-1">Service Required</label>
+                                        <select id="subject" class="w-full bg-white text-black px-3.5 py-2.5 text-xs font-body outline-none focus:ring-2 focus:ring-mustard border-none">
+                                            <option value="Enterprise Routing & Switching">Enterprise Routing & Switching</option>
+                                            <option value="Network Security & Firewalls">Network Security & Firewalls</option>
+                                            <option value="Cloud & SD-WAN Integration">Cloud & SD-WAN Integration</option>
+                                            <option value="Network Automation">Network Automation & NetDevOps</option>
+                                            <option value="Infrastructure Audit">Full Infrastructure Audit</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="budget" class="block text-[10px] font-heading uppercase text-mustard tracking-wider mb-1">Estimated Project Scope / Budget</label>
+                                    <select id="budget" class="w-full bg-white text-black px-3.5 py-2.5 text-xs font-body outline-none focus:ring-2 focus:ring-mustard border-none">
+                                        <option value="$2,000 - $5,000">$2,000 — $5,000 (Small Audit / Config)</option>
+                                        <option value="$5,000 - $12,000">$5,000 — $12,000 (Branch SD-WAN / Migration)</option>
+                                        <option value="$12,000 - $25,000">$12,000 — $25,000 (Data Center / Cloud Mesh)</option>
+                                        <option value="$25,000+">$25,000+ (Enterprise Overhaul)</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label for="message" class="block text-[10px] font-heading uppercase text-mustard tracking-wider mb-1">Network Project Details *</label>
+                                    <textarea id="message" required rows="4" placeholder="Describe your current network topology, hardware vendors, migration timeline, or security requirements..." 
+                                              class="w-full bg-white text-black px-3.5 py-2.5 text-xs font-body outline-none focus:ring-2 focus:ring-mustard border-none placeholder:text-gray-400 resize-none"></textarea>
+                                </div>
+                                
+                                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-3.5 font-heading font-black text-xs uppercase tracking-widest transition-colors shadow-lg flex items-center justify-center gap-2">
+                                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                                    <span>SEND VIA WHATSAPP</span>
+                                </button>
+                            </form>
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </main>
+
+            <!-- FOOTER -->
+            <footer class="w-full bg-sec-black border-t border-dark-gray py-6 px-4 sm:px-8 text-xs text-light-gray font-body">
+                <div class="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
+                    
+                    <!-- Copyright -->
+                    <div>
+                        © 2026 <span class="text-mustard font-semibold">Vicy Capslock</span>. Senior Network Engineer. All rights reserved.
+                    </div>
+
+                    <!-- Footer Socials -->
+                    <div class="flex items-center gap-4 text-light-gray">
+                        <a href="#" aria-label="GitHub" class="hover:text-mustard transition-colors text-xs"><i class="fa-brands fa-github"></i></a>
+                        <a href="#" aria-label="Twitter" class="hover:text-mustard transition-colors text-xs"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="https://wa.me/254100326074" target="_blank" aria-label="WhatsApp" class="hover:text-emerald-400 transition-colors text-xs"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="#" aria-label="LinkedIn" class="hover:text-mustard transition-colors text-xs"><i class="fa-brands fa-linkedin-in"></i></a>
                     </div>
 
                 </div>
+            </footer>
 
-            </div>
+        </div>
 
-            <!-- Social Media Row -->
-            <div class="relative z-10 flex justify-center sm:justify-start items-center gap-3 mb-12 border-b border-dark-gray pb-8">
-                <a href="#" aria-label="Facebook" class="w-7 h-7 rounded-full border border-dark-gray hover:border-mustard hover:text-mustard flex items-center justify-center transition-colors text-xs text-light-gray">
-                    <i class="fa-brands fa-facebook-f"></i>
-                </a>
-                <a href="#" aria-label="Twitter" class="w-7 h-7 rounded-full border border-dark-gray hover:border-mustard hover:text-mustard flex items-center justify-center transition-colors text-xs text-light-gray">
-                    <i class="fa-brands fa-twitter"></i>
-                </a>
-                <a href="#" aria-label="Pinterest" class="w-7 h-7 rounded-full border border-dark-gray hover:border-mustard hover:text-mustard flex items-center justify-center transition-colors text-xs text-light-gray">
-                    <i class="fa-brands fa-pinterest-p"></i>
-                </a>
-                <a href="#" aria-label="Dribbble" class="w-7 h-7 rounded-full border border-dark-gray hover:border-mustard hover:text-mustard flex items-center justify-center transition-colors text-xs text-light-gray">
-                    <i class="fa-brands fa-dribbble"></i>
-                </a>
-                <a href="#" aria-label="Google Plus" class="w-7 h-7 rounded-full border border-dark-gray hover:border-mustard hover:text-mustard flex items-center justify-center transition-colors text-xs text-light-gray">
-                    <i class="fa-brands fa-google-plus-g"></i>
-                </a>
-            </div>
-
-            <!-- Two Column Area: Map & Contact Form -->
-            <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
-                
-                <!-- Left: Stylized Map Canvas / Vector Map Graphic -->
-                <div class="relative w-full h-72 md:h-full min-h-[280px] bg-sec-black border border-dark-gray overflow-hidden">
-                    <canvas id="mapCanvas" class="w-full h-full block"></canvas>
-                    
-                    <!-- Map Badge Overlay -->
-                    <div class="absolute top-3 left-3 bg-main-black/90 px-3 py-1.5 text-[10px] font-heading uppercase tracking-widest text-mustard border border-dark-gray">
-                        <i class="fa-solid fa-location-dot mr-1"></i> Studio Location
-                    </div>
-                </div>
-
-                <!-- Right: Minimalist Form -->
-                <form id="contactForm" onsubmit="handleFormSubmit(event)" class="flex flex-col gap-4">
-                    <div>
-                        <label for="name" class="sr-only">Name</label>
-                        <input type="text" id="name" required placeholder="Name" 
-                               class="w-full bg-white text-black px-4 py-3 text-xs sm:text-sm font-body outline-none focus:ring-2 focus:ring-mustard border-none transition-all placeholder:text-gray-500">
-                    </div>
-                    <div>
-                        <label for="email" class="sr-only">E-mail</label>
-                        <input type="email" id="email" required placeholder="E-mail" 
-                               class="w-full bg-white text-black px-4 py-3 text-xs sm:text-sm font-body outline-none focus:ring-2 focus:ring-mustard border-none transition-all placeholder:text-gray-500">
-                    </div>
-                    <div>
-                        <label for="subject" class="sr-only">Subject</label>
-                        <select id="subject" class="w-full bg-white text-black px-4 py-3 text-xs sm:text-sm font-body outline-none focus:ring-2 focus:ring-mustard border-none transition-all">
-                            <option value="General Inquiry">General Inquiry</option>
-                            <option value="Project Request">New Project Request</option>
-                            <option value="Design Audit">Design System Audit</option>
-                            <option value="Speaking/Mentorship">Speaking or Mentorship</option>
-                        </select>
-                    </div>
-                    <div class="flex-grow">
-                        <label for="message" class="sr-only">Message</label>
-                        <textarea id="message" required rows="4" placeholder="Message" 
-                                  class="w-full h-full bg-white text-black px-4 py-3 text-xs sm:text-sm font-body outline-none focus:ring-2 focus:ring-mustard border-none transition-all placeholder:text-gray-500 resize-none"></textarea>
-                    </div>
-                    
-                    <button type="submit" class="w-full bg-mustard hover:bg-mustard-hover text-black py-3.5 font-heading font-black text-xs uppercase tracking-widest transition-colors shadow-md">
-                        SEND MESSAGE
-                    </button>
-                </form>
-
-            </div>
-
-        </section>
-
-    </main>
+    </div>
 
     <!-- PROJECT CASE STUDY MODAL -->
     <div id="projectModal" class="fixed inset-0 z-50 bg-black/80 modal-blur flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
@@ -859,13 +1294,13 @@
             </h3>
             <img id="modalImage" src="" alt="Project Preview" class="w-full h-64 object-cover border border-dark-gray mb-6">
             <p id="modalDesc" class="text-xs text-light-gray leading-relaxed mb-6">
-                Detailed description...
+                Detailed network engineering case study...
             </p>
             <div class="flex items-center justify-between border-t border-dark-gray pt-4">
-                <span class="text-[10px] text-light-gray font-mono">STATUS: COMPLETED 2026</span>
-                <button onclick="closeProjectModal()" class="bg-mustard text-black px-4 py-2 font-heading font-bold text-xs uppercase tracking-wider">
-                    Close Case Study
-                </button>
+                <span class="text-[10px] text-light-gray font-mono">STATUS: DEPLOYED & AUDITED 2026</span>
+                <a href="https://wa.me/254100326074" target="_blank" class="bg-mustard text-black px-4 py-2 font-heading font-bold text-xs uppercase tracking-wider">
+                    Discuss Similar Network Build
+                </a>
             </div>
         </div>
     </div>
@@ -877,39 +1312,40 @@
                 <i class="fa-solid fa-xmark"></i>
             </button>
             <h3 class="font-heading font-black text-xl text-white uppercase tracking-tight mb-2">
-                PROJECT ESTIMATOR
+                NETWORK AUDIT & BUILD ESTIMATOR
             </h3>
-            <p class="text-xs text-light-gray mb-6">Select your project requirements for an instant estimate range.</p>
+            <p class="text-xs text-light-gray mb-6">Select your project scope for an initial estimation range.</p>
 
             <form onsubmit="handleQuoteSubmit(event)" class="space-y-4 text-xs">
                 <div>
                     <label class="block font-heading uppercase text-[10px] tracking-wider text-mustard mb-2">Service Type</label>
                     <select id="estService" onchange="calcEstimate()" class="w-full bg-white text-black p-3 outline-none">
-                        <option value="3500">UI/UX Design Architecture ($3,500+)</option>
-                        <option value="5000">Full Web Application Build ($5,000+)</option>
-                        <option value="2500">Design System Architecture ($2,500+)</option>
+                        <option value="3000">Network Security & Firewall Audit ($3,000+)</option>
+                        <option value="6000">Branch SD-WAN & BGP Migration ($6,000+)</option>
+                        <option value="8500">Hybrid Cloud AWS Transit Gateway Build ($8,500+)</option>
+                        <option value="4500">Ansible / NetBox Automation Suite ($4,500+)</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block font-heading uppercase text-[10px] tracking-wider text-mustard mb-2">Estimated Timeline</label>
+                    <label class="block font-heading uppercase text-[10px] tracking-wider text-mustard mb-2">Execution Window</label>
                     <select id="estTime" onchange="calcEstimate()" class="w-full bg-white text-black p-3 outline-none">
-                        <option value="1">Standard (4-6 Weeks)</option>
-                        <option value="1.25">Expedited (2-3 Weeks +25%)</option>
+                        <option value="1">Standard Schedule (3-5 Weeks)</option>
+                        <option value="1.25">Urgent Cutover Window (1-2 Weeks +25%)</option>
                     </select>
                 </div>
                 <div class="p-4 bg-sec-black border border-dark-gray flex justify-between items-center my-4">
-                    <span class="font-heading uppercase text-xs text-light-gray">Est. Budget Range:</span>
-                    <span id="estResult" class="font-heading font-black text-lg text-mustard">$3,500 - $4,800</span>
+                    <span class="font-heading uppercase text-xs text-light-gray">Est. Scope Budget:</span>
+                    <span id="estResult" class="font-heading font-black text-lg text-mustard">$3,000 - $4,200</span>
                 </div>
-                <button type="submit" class="w-full bg-mustard text-black py-3 font-heading font-bold uppercase tracking-wider">
-                    BOOK INITIAL CONSULTATION
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-3 font-heading font-bold uppercase tracking-wider flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-base"></i> CONSULT VIA WHATSAPP
                 </button>
             </form>
         </div>
     </div>
 
     <!-- FLOATING THEME CUSTOMIZER WIDGET -->
-    <div id="themePanel" class="fixed bottom-6 left-6 z-50 bg-card-black border border-dark-gray p-4 shadow-2xl hidden flex-col gap-3 font-heading text-xs uppercase">
+    <div id="themePanel" class="fixed bottom-6 right-6 z-50 bg-card-black border border-dark-gray p-4 shadow-2xl hidden flex-col gap-3 font-heading text-xs uppercase">
         <span class="text-mustard font-bold text-[10px] tracking-wider">Select Accent Theme</span>
         <div class="flex items-center gap-3">
             <button onclick="setTheme('#E5CC20', '#cbb41a')" class="w-6 h-6 rounded-full bg-[#E5CC20] border border-white/20" title="Mustard Yellow"></button>
@@ -919,74 +1355,57 @@
         </div>
     </div>
 
-    <!-- FOOTER -->
-    <footer class="w-full bg-sec-black border-t border-dark-gray py-6 px-4 sm:px-8 mt-12 text-xs text-light-gray font-body">
-        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
-            
-            <!-- Copyright -->
-            <div>
-                © 2026 <span class="text-mustard font-semibold">Victor Capslock</span>. All rights reserved.
-            </div>
-
-            <!-- Footer Socials -->
-            <div class="flex items-center gap-4 text-light-gray">
-                <a href="#" aria-label="Facebook" class="hover:text-mustard transition-colors text-xs"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="#" aria-label="Twitter" class="hover:text-mustard transition-colors text-xs"><i class="fa-brands fa-twitter"></i></a>
-                <a href="#" aria-label="Pinterest" class="hover:text-mustard transition-colors text-xs"><i class="fa-brands fa-pinterest-p"></i></a>
-                <a href="#" aria-label="Dribbble" class="hover:text-mustard transition-colors text-xs"><i class="fa-brands fa-dribbble"></i></a>
-                <a href="#" aria-label="Google Plus" class="hover:text-mustard transition-colors text-xs"><i class="fa-brands fa-google-plus-g"></i></a>
-            </div>
-
-        </div>
-    </footer>
-
     <!-- Custom Floating Toast Notification -->
-    <div id="toast" class="fixed bottom-6 right-6 bg-mustard text-black px-6 py-4 shadow-2xl z-50 transform translate-y-24 opacity-0 flex items-center gap-3 font-heading text-xs font-bold uppercase tracking-wider border-l-4 border-black">
+    <div id="toast" class="fixed bottom-6 left-6 z-50 bg-mustard text-black px-6 py-4 shadow-2xl transform -translate-y-24 opacity-0 flex items-center gap-3 font-heading text-xs font-bold uppercase tracking-wider border-l-4 border-black">
         <i id="toast-icon" class="fa-solid fa-circle-check text-base"></i>
         <span id="toast-message">Action executed successfully.</span>
     </div>
 
     <script>
+        
+        // --- Owner WhatsApp Phone Number (Clean digits for wa.me API) ---
+        const WHATSAPP_OWNER_NUMBER = "254100326074";
+
         // --- Project Data Matrix ---
         const projectsData = [
             {
-                title: "Apex Analytics Engine",
-                category: "UI/UX • FinTech",
-                image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop",
-                desc: "An end-to-end redesign of institutional data analytics dashboard. Built with dark-mode aesthetic symmetry, high density data tables, custom charts, and sub-10ms response visualizer interfaces."
+                title: "Multi-Site Global SD-WAN & BGP WAN Migration",
+                category: "WAN • Enterprise Architecture",
+                image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=800&auto=format&fit=crop",
+                desc: "Designed and executed a zero-downtime SD-WAN deployment connecting 45 global branches. Incorporated multi-homed BGP routing, dynamic IPsec tunnels, QoS for VoIP, and automated failover circuits."
             },
             {
-                title: "Kuro Digital Magazine",
-                category: "Web App • Editorial",
-                image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=800&auto=format&fit=crop",
-                desc: "Editorial online publication platform tailored for architectural design enthusiasts. Includes custom web typography controls, ambient dark audio players, and fast client-side article rendering."
+                title: "AWS Transit Gateway & Palo Alto Cloud Mesh",
+                category: "Hybrid Cloud • Security",
+                image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=800&auto=format&fit=crop",
+                desc: "Architected a high-availability AWS Transit Gateway topology linking on-premise Cisco Nexus core datacenters to multiple cloud VPCs, secured by centralized Palo Alto VM-Series firewalls with automated threat inspection."
             },
             {
-                title: "Veloce Brand Identity",
-                category: "Branding • Design Tokens",
-                image: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=800&auto=format&fit=crop",
-                desc: "Comprehensive visual branding strategy and component library engineered for an automotive tech brand. Features multi-theme CSS tokens, Figma design components, and brand guidelines."
+                title: "Ansible & NetBox Zero-Touch Provisioning",
+                category: "Automation • NetDevOps",
+                image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=800&auto=format&fit=crop",
+                desc: "Engineered an enterprise infrastructure-as-code automation framework utilizing NetBox as dynamic IPAM/Source of Truth, coupled with Ansible playbooks for automated VLAN, interface, and security rule deployments across 200+ network switches."
             }
         ];
 
         // --- Testimonials Carousel Data ---
         const testimonials = [
             {
-                quote: "Victor is a rare design powerhouse who seamlessly bridges editorial aesthetics with technical front-end precision. His work transformed our user engagement metrics within weeks.",
-                author: "— John Doe",
-                role: "Senior Tech Lead, Apex Studio",
+                quote: "Vicy migrated our entire multi-region network infrastructure with zero unplanned downtime. His grasp of BGP route tuning and network automation saved our team hundreds of operational hours.",
+                author: "— Alex Mercer",
+                role: "VP of Infrastructure, Apex Enterprise",
                 avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop"
             },
             {
-                quote: "Working alongside Victor on our visual system revamp was an incredible experience. Precise typography, robust layout discipline, and outstanding creative direction.",
+                quote: "Working with Vicy on our Palo Alto and cloud transition was seamless. He brings deep security rigor, precise network documentation, and exceptional emergency response.",
                 author: "— Sarah Jenkins",
-                role: "VP of Product, Glyph Digital",
+                role: "Director of IT Security, Glyph Tech",
                 avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=300&auto=format&fit=crop"
             },
             {
-                quote: "The contrast, symmetry, and attention to detail Victor brings to UI designs are second to none. Truly a world-class designer.",
+                quote: "Vicy's automated network provisioning pipelines transformed our switch deployment times from days to minutes. Truly an elite network engineer.",
                 author: "— Marcus Vance",
-                role: "Design Director, Horizon Media",
+                role: "Lead DevOps Architect, Cloud Mesh Solutions",
                 avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=300&auto=format&fit=crop"
             }
         ];
@@ -1070,6 +1489,34 @@
             });
         }
 
+        // --- FAQ Accordion Toggle ---
+        function toggleFaq(id) {
+            const answer = document.getElementById(`faqAnswer-${id}`);
+            const icon = document.getElementById(`faqIcon-${id}`);
+            if (!answer) return;
+
+            if (answer.classList.contains('hidden')) {
+                answer.classList.remove('hidden');
+                icon.className = 'fa-solid fa-minus text-mustard';
+            } else {
+                answer.classList.add('hidden');
+                icon.className = 'fa-solid fa-plus text-mustard';
+            }
+        }
+
+        // --- Pre-select service in form ---
+        function preselectService(serviceName) {
+            const subjectSelect = document.getElementById('subject');
+            if (subjectSelect) {
+                for (let i = 0; i < subjectSelect.options.length; i++) {
+                    if (subjectSelect.options[i].value.toLowerCase().includes(serviceName.toLowerCase())) {
+                        subjectSelect.selectedIndex = i;
+                        break;
+                    }
+                }
+            }
+        }
+
         // --- Case Study Modals ---
         function openProjectModal(index) {
             const data = projectsData[index];
@@ -1114,8 +1561,17 @@
 
         function handleQuoteSubmit(e) {
             e.preventDefault();
+            const estResult = document.getElementById('estResult').textContent;
             closeQuoteModal();
-            showToast("Consultation Request Received! Victor will respond in 24h.");
+            
+            // Redirect quote to WhatsApp
+            const msg = `Hello Vicy! I calculated an initial network audit/build estimate on your portfolio: Scope Range ${estResult}. I would like to schedule a consultation regarding our infrastructure!`;
+            const waUrl = `https://wa.me/${WHATSAPP_OWNER_NUMBER}?text=${encodeURIComponent(msg)}`;
+            
+            showToast("Opening WhatsApp with your consultation request...");
+            setTimeout(() => {
+                window.open(waUrl, '_blank');
+            }, 800);
         }
 
         // --- Navigation Drawer & Theme Switcher ---
@@ -1133,146 +1589,162 @@
         function toggleThemePanel() {
             const panel = document.getElementById('themePanel');
             panel.classList.toggle('hidden');
-            panel.classList.toggle('flex');
         }
 
-        function setTheme(accentColor, hoverColor) {
-            document.documentElement.style.setProperty('--accent-color', accentColor);
-            document.documentElement.style.setProperty('--accent-hover', hoverColor);
-            showToast(`Theme updated successfully!`);
-            drawDarkMap();
+        function setTheme(color, hover) {
+            document.documentElement.style.setProperty('--accent-color', color);
+            document.documentElement.style.setProperty('--accent-hover', hover);
+            showToast(`Accent theme updated.`);
         }
 
-        // --- Download CV Callback ---
-        function downloadCV() {
-            showToast("Victor Capslock CV Downloaded Successfully!");
-        }
-
-        // --- Contact Form Handling ---
-        function handleFormSubmit(e) {
-            e.preventDefault();
-            const name = document.getElementById('name').value;
-            showToast(`Thank you ${name}, your message has been sent!`);
-            document.getElementById('contactForm').reset();
-        }
-
-        // --- Toast Notification Engine ---
-        function showToast(message) {
+        function showToast(msg) {
             const toast = document.getElementById('toast');
-            const toastMsg = document.getElementById('toast-message');
-            toastMsg.textContent = message;
-
-            toast.classList.remove('translate-y-24', 'opacity-0');
+            document.getElementById('toast-message').textContent = msg;
+            toast.classList.remove('-translate-y-24', 'opacity-0');
             toast.classList.add('translate-y-0', 'opacity-100');
 
             setTimeout(() => {
                 toast.classList.remove('translate-y-0', 'opacity-100');
-                toast.classList.add('translate-y-24', 'opacity-0');
-            }, 3500);
+                toast.classList.add('-translate-y-24', 'opacity-0');
+            }, 3000);
         }
 
-        // --- Custom Dark Styled Map Canvas ---
-        function drawDarkMap() {
-            const canvas = document.getElementById('mapCanvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
+        function downloadCV() {
+            showToast("Downloading Vicy Capslock's Network Engineering Resume...");
+        }
 
-            const width = canvas.parentElement.clientWidth;
-            const height = canvas.parentElement.clientHeight;
-            canvas.width = width * window.devicePixelRatio;
-            canvas.height = height * window.devicePixelRatio;
-            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+        function readArticle(id) {
+            showToast(`Opening technical article ${id}...`);
+        }
 
-            const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim() || '#E5CC20';
+        // --- Form Submission to WhatsApp ---
+        function handleWhatsAppFormSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            const service = document.getElementById('subject').value;
+            const budget = document.getElementById('budget').value;
+            const message = document.getElementById('message').value;
 
-            // Background landmass
-            ctx.fillStyle = '#111113';
-            ctx.fillRect(0, 0, width, height);
+            const fullMsg = `*NEW NETWORK CONSULTING INQUIRY*\n` +
+                            `------------------------------------\n` +
+                            `*Name/Org:* ${name}\n` +
+                            `*Phone/WhatsApp:* ${phone}\n` +
+                            `*Email:* ${email}\n` +
+                            `*Service Needed:* ${service}\n` +
+                            `*Estimated Scope:* ${budget}\n\n` +
+                            `*Network Details:* ${message}`;
 
-            // Water area (Right Coast)
-            ctx.fillStyle = '#0a0a0d';
-            ctx.beginPath();
-            ctx.moveTo(width * 0.7, 0);
-            ctx.bezierCurveTo(width * 0.65, height * 0.3, width * 0.75, height * 0.7, width * 0.68, height);
-            ctx.lineTo(width, height);
-            ctx.lineTo(width, 0);
-            ctx.closePath();
-            ctx.fill();
-
-            // Water grid line details
-            ctx.strokeStyle = '#18181c';
-            ctx.lineWidth = 1;
-            for(let x = 0; x < width; x += 30) {
-                ctx.beginPath();
-                ctx.moveTo(x, 0);
-                ctx.lineTo(x, height);
-                ctx.stroke();
-            }
-            for(let y = 0; y < height; y += 30) {
-                ctx.beginPath();
-                ctx.moveTo(0, y);
-                ctx.lineTo(width, y);
-                ctx.stroke();
-            }
-
-            // Road Grid
-            ctx.strokeStyle = '#222226';
-            ctx.lineWidth = 4;
+            const waUrl = `https://wa.me/${WHATSAPP_OWNER_NUMBER}?text=${encodeURIComponent(fullMsg)}`;
+            showToast("Redirecting to WhatsApp...");
             
-            const roads = [
-                [{x: 0, y: height * 0.2}, {x: width * 0.7, y: height * 0.25}],
-                [{x: 0, y: height * 0.55}, {x: width * 0.72, y: height * 0.5}],
-                [{x: 0, y: height * 0.85}, {x: width * 0.68, y: height * 0.85}],
-                [{x: width * 0.2, y: 0}, {x: width * 0.25, y: height}],
-                [{x: width * 0.45, y: 0}, {x: width * 0.5, y: height}],
-            ];
-
-            roads.forEach(r => {
-                ctx.beginPath();
-                ctx.moveTo(r[0].x, r[0].y);
-                ctx.lineTo(r[1].x, r[1].y);
-                ctx.stroke();
-            });
-
-            // Route Line Highlight using active Accent
-            ctx.strokeStyle = accent;
-            ctx.lineWidth = 3;
-            ctx.setLineDash([6, 4]);
-            ctx.beginPath();
-            ctx.moveTo(width * 0.1, height * 0.85);
-            ctx.lineTo(width * 0.25, height * 0.85);
-            ctx.lineTo(width * 0.23, height * 0.52);
-            ctx.lineTo(width * 0.47, height * 0.51);
-            ctx.stroke();
-            ctx.setLineDash([]);
-
-            // Location Pin Icon
-            const pinX = width * 0.47;
-            const pinY = height * 0.51;
-
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
-            ctx.beginPath();
-            ctx.arc(pinX, pinY, 16, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = accent;
-            ctx.beginPath();
-            ctx.arc(pinX, pinY, 7, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = '#0D0D0F';
-            ctx.beginPath();
-            ctx.arc(pinX, pinY, 3, 0, Math.PI * 2);
-            ctx.fill();
+            setTimeout(() => {
+                window.open(waUrl, '_blank');
+            }, 600);
         }
 
-        // --- Window Initialization ---
-        window.onload = function() {
-            animateSkillRings();
-            drawDarkMap();
+        // --- Stylized Vector Map Canvas Drawing ---
+        function drawMapCanvas() {
+            const canvas = document.getElementById('mapCanvas');
+            if(!canvas) return;
+            const ctx = canvas.getContext('2d');
+            
+            function resize() {
+                canvas.width = canvas.parentElement.clientWidth;
+                canvas.height = canvas.parentElement.clientHeight;
+                draw();
+            }
 
-            window.addEventListener('resize', drawDarkMap);
-        };
+            function draw() {
+                const w = canvas.width;
+                const h = canvas.height;
+                
+                // Dark Background
+                ctx.fillStyle = '#111112';
+                ctx.fillRect(0, 0, w, h);
+
+                // Grid Lines
+                ctx.strokeStyle = '#272729';
+                ctx.lineWidth = 1;
+                
+                const gridSize = 25;
+                for(let x = 0; x < w; x += gridSize) {
+                    ctx.beginPath();
+                    ctx.moveTo(x, 0);
+                    ctx.lineTo(x, h);
+                    ctx.stroke();
+                }
+                for(let y = 0; y < h; y += gridSize) {
+                    ctx.beginPath();
+                    ctx.moveTo(0, y);
+                    ctx.lineTo(w, y);
+                    ctx.stroke();
+                }
+
+                // Vector Network Node Lines
+                ctx.strokeStyle = '#E5CC20';
+                ctx.lineWidth = 1.5;
+                ctx.setLineDash([4, 4]);
+
+                const points = [
+                    {x: w * 0.2, y: h * 0.3},
+                    {x: w * 0.5, y: h * 0.5},
+                    {x: w * 0.8, y: h * 0.35},
+                    {x: w * 0.65, y: h * 0.75},
+                    {x: w * 0.35, y: h * 0.7}
+                ];
+
+                ctx.beginPath();
+                ctx.moveTo(points[0].x, points[0].y);
+                for(let i = 1; i < points.length; i++) {
+                    ctx.lineTo(points[i].x, points[i].y);
+                }
+                ctx.closePath();
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                // Node Dots
+                points.forEach((p, idx) => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, idx === 1 ? 7 : 4, 0, Math.PI * 2);
+                    ctx.fillStyle = idx === 1 ? '#E5CC20' : '#10B981';
+                    ctx.fill();
+                    ctx.strokeStyle = '#000';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                });
+            }
+
+            window.addEventListener('resize', resize);
+            resize();
+        }
+
+        // --- Initialize Page Scripts ---
+        window.addEventListener('DOMContentLoaded', () => {
+            animateSkillRings();
+            drawMapCanvas();
+
+            // Highlight Active Sidebar Links on Scroll
+            const sections = document.querySelectorAll('section[id]');
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 120;
+                    if (window.scrollY >= sectionTop) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+
     </script>
 </body>
 </html>
