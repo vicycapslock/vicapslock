@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Victor Capslock | Senior UI/UX Designer & Developer</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,400&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'main-black': '#0D0D0F',
+                        'sec-black': '#111112',
+                        'card-black': '#18181A',
+                        'mustard': 'var(--accent-color, #E5CC20)',
+                        'mustard-hover': 'var(--accent-hover, #cbb41a)',
+                        'light-gray': '#BDBDBF',
+                        'dark-gray': '#272729',
+                        'ghost-gray': 'rgba(255, 255, 255, 0.05)',
+                    },
+                    fontFamily: {
+                        heading: ['Montserrat', 'sans-serif'],
+                        body: ['Open Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --accent-color: #E5CC20;
+            --accent-hover: #cbb41a;
+            --accent-light: rgba(229, 204, 32, 0.15);
+            --accent-text: #000000;
+        }
+
+        .theme-accent-bg { background-color: var(--accent-color) !important; }
+        .theme-accent-hover:hover { background-color: var(--accent-hover) !important; }
+        .theme-accent-text { color: var(--accent-color) !important; }
+        .theme-accent-border { border-color: var(--accent-color) !important; }
+
+        /* Custom scrollbar & editorial touches */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0D0D0F;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #272729;
+            border-radius: 0px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-color);
+        }
+
+        /* Giant Ghost Letters */
+        .ghost-letter {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            line-height: 0.8;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        /* SVG Circular Progress transitions */
+        .progress-ring-circle {
+            transition: stroke-dashoffset 1s ease-in-out;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+            stroke: var(--accent-color) !important;
+        }
+
+        /* Custom image cutout frame */
+        .cutout-portrait {
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
+        }
+
+        /* Custom Sharp UI Transitions */
+        .btn-sharp {
+            border-radius: 0px !important;
+            transition: all 0.2s ease;
+        }
+
+        /* Toast styling */
+        #toast {
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+        }
+
+        .modal-blur {
+            backdrop-filter: blur(8px);
+        }
+    </style>
+</head>
+<body class="bg-main-black text-white font-body selection:bg-mustard selection:text-black min-h-screen flex flex-col justify-between overflow-x-hidden">
+
+    <!-- STICKY NAVBAR -->
+    <nav class="sticky top-0 z-40 bg-main-black/90 backdrop-blur-md border-b border-dark-gray transition-all">
+        <div class="max-w-5xl mx-auto px-4 sm:px-8 py-4 flex items-center justify-between">
+            <a href="#about" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 bg-mustard text-black flex items-center justify-center font-heading font-black text-lg transition-transform group-hover:scale-105">
+                    V
+                </div>
+                <span class="font-heading font-black tracking-wider text-sm text-white uppercase group-hover:text-mustard transition-colors">
+                    CAPSLOCK
+                </span>
+            </a>
+
+            <!-- Desktop Links -->
+            <div class="hidden md:flex items-center gap-6 font-heading text-xs uppercase tracking-widest font-semibold text-light-gray">
+                <a href="#about" class="hover:text-mustard transition-colors">About</a>
+                <a href="#services" class="hover:text-mustard transition-colors">Services</a>
+                <a href="#skills" class="hover:text-mustard transition-colors">Skills</a>
+                <a href="#works" class="hover:text-mustard transition-colors">Works</a>
+                <a href="#experience" class="hover:text-mustard transition-colors">Experience</a>
+                <a href="#reference" class="hover:text-mustard transition-colors">Reference</a>
+                <a href="#contact" class="hover:text-mustard transition-colors">Contact</a>
+            </div>
+
+            <!-- Header CTA & Mobile Menu Toggle -->
+            <div class="flex items-center gap-3">
+                <button onclick="toggleThemePanel()" title="Change Accent Theme" class="w-8 h-8 rounded-full border border-dark-gray hover:border-mustard flex items-center justify-center text-xs text-light-gray hover:text-mustard transition-colors">
+                    <i class="fa-solid fa-palette"></i>
+                </button>
+                <a href="#contact" class="hidden sm:inline-flex btn-sharp bg-mustard hover:bg-mustard-hover text-black px-4 py-2 font-heading font-extrabold text-[11px] uppercase tracking-wider">
+                    HIRE ME
+                </a>
+                <button onclick="toggleMobileNav()" class="md:hidden text-light-gray hover:text-mustard p-2 text-xl" aria-label="Toggle Navigation">
+                    <i id="mobileMenuIcon" class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Menu -->
+        <div id="mobileDrawer" class="hidden md:hidden bg-sec-black border-b border-dark-gray px-6 py-6 flex flex-col gap-4 font-heading text-xs uppercase tracking-wider">
+            <a href="#about" onclick="toggleMobileNav()" class="text-light-gray hover:text-mustard py-1">About Me</a>
+            <a href="#services" onclick="toggleMobileNav()" class="text-light-gray hover:text-mustard py-1">Services</a>
+            <a href="#skills" onclick="toggleMobileNav()" class="text-light-gray hover:text-mustard py-1">My Skills</a>
+            <a href="#works" onclick="toggleMobileNav()" class="text-light-gray hover:text-mustard py-1">Featured Works</a>
+            <a href="#experience" onclick="toggleMobileNav()" class="text-light-gray hover:text-mustard py-1">Experience</a>
+            <a href="#reference" onclick="toggleMobileNav()" class="text-light-gray hover:text-mustard py-1">Reference</a>
+            <a href="#contact" onclick="toggleMobileNav()" class="text-light-gray hover:text-mustard py-1">Contact Me</a>
+        </div>
+    </nav>
+
+    <!-- TOP HEADER BANNER -->
+    <header class="w-full bg-mustard py-8 px-4 sm:px-8 text-center uppercase tracking-widest font-heading font-extrabold text-xl sm:text-2xl shadow-lg relative z-20 transition-colors">
+        <div class="max-w-5xl mx-auto flex justify-center items-center gap-2">
+            <span class="text-black font-black">VICTOR CAPSLOCK</span>
+            <span class="text-white opacity-90 font-light">/ PORTFOLIO 2026</span>
+        </div>
+    </header>
+
+    <!-- MAIN WRAPPER CONTAINER -->
+    <main class="w-full max-w-5xl mx-auto px-4 sm:px-8 flex-grow">
+
+        <!-- SECTION 1: ABOUT ME HERO -->
+        <section id="about" class="relative pt-12 pb-20 border-b border-dark-gray">
+            
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start relative z-10">
+                
+                <!-- Left Portrait Column -->
+                <div class="md:col-span-5 relative group">
+                    <div class="relative w-full max-w-sm mx-auto md:max-w-none">
+                        <!-- Background Glow behind portrait -->
+                        <div class="absolute inset-0 bg-mustard/10 filter blur-xl transform scale-95 rounded-none"></div>
+                        
+                        <!-- Main Cutout Image -->
+                        <div class="relative overflow-hidden cutout-portrait">
+                            <img src="https://i.pinimg.com/736x/b9/09/57/b90957b38f8222de334db733940d2979.jpg" 
+                                 alt="Victor Capslock" 
+                                 class="w-full h-auto object-cover grayscale contrast-125 hover:grayscale-0 transition-all duration-700 block"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/500x650/111112/E5CC20?text=Victor+Capslock';">
+                        </div>
+
+                        <!-- Name Overlay Card -->
+                        <div class="absolute bottom-6 left-2 right-2 bg-mustard/90 backdrop-blur-sm p-4 border-l-4 border-black shadow-2xl transition-transform duration-300 transform group-hover:translate-y-[-4px]">
+                            <h2 class="font-heading font-black text-lg sm:text-xl text-black uppercase tracking-tight">
+                                NAME: <span class="text-white drop-shadow-sm">VICTOR CAPSLOCK</span>
+                            </h2>
+                            <p class="font-heading text-xs sm:text-sm text-black/90 font-semibold tracking-wider uppercase mt-1">
+                                Professional UI/UX Designer
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Copy Column -->
+                <div class="md:col-span-7 relative pt-4 md:pt-2">
+                    
+                    <!-- Giant Ghost Letter A -->
+                    <div class="ghost-letter absolute -top-10 -left-6 text-[140px] sm:text-[180px] text-ghost-gray select-none z-0">
+                        A
+                    </div>
+
+                    <!-- Header & Divider -->
+                    <div class="relative z-10">
+                        <h1 class="font-heading font-black text-3xl sm:text-4xl tracking-wider text-light-gray uppercase">
+                            ABOUT ME
+                        </h1>
+                        <div class="w-full h-[2px] bg-dark-gray my-4 flex items-center">
+                            <div class="w-16 h-[2px] bg-mustard"></div>
+                        </div>
+                    </div>
+
+                    <!-- Text Paragraphs -->
+                    <div class="relative z-10 text-light-gray/90 text-sm leading-relaxed space-y-4 font-normal mt-6 text-justify">
+                        <p>
+                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. I specialize in designing and engineering high-impact digital products, editorial user interfaces, and robust visual design systems that merge graphic precision with seamless interaction design.
+                        </p>
+                        <p>
+                            Based on a philosophy of dark aesthetic symmetry and functional minimalism, my work spans cross-platform application design, front-end architecture, and visual branding for forward-thinking creative technology teams worldwide.
+                        </p>
+                    </div>
+
+                    <!-- Download CV Button & Social Icons -->
+                    <div class="relative z-10 mt-8 flex flex-wrap items-center gap-6">
+                        <!-- Yellow Pill-shaped Download CV Button -->
+                        <button onclick="downloadCV()" class="btn-sharp rounded-full bg-mustard hover:bg-mustard-hover text-black px-6 py-3 font-heading font-bold text-xs uppercase tracking-wider flex items-center gap-2 shadow-lg transition-transform active:scale-95">
+                            <i class="fa-solid fa-download text-sm"></i>
+                            <span>DOWNLOAD CV</span>
+                        </button>
+
+                        <button onclick="openQuoteModal()" class="btn-sharp border border-mustard text-mustard hover:bg-mustard hover:text-black px-6 py-3 font-heading font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all">
+                            <i class="fa-solid fa-calculator text-sm"></i>
+                            <span>ESTIMATE PROJECT</span>
+                        </button>
+
+                        <!-- Social Media Icons Row -->
+                        <div class="flex items-center gap-3 text-light-gray">
+                            <a href="#" aria-label="Facebook" class="w-8 h-8 rounded-full border border-dark-gray hover:border-mustard hover:text-mustard flex items-center justify-center transition-colors text-xs">
+                                <i class="fa-brands fa-facebook-f"></i>
+                            </a>
+                            <a href="#" aria-label="Twitter" class="w-8 h-8 rounded-full border border-dark-gray hover:border-mustard hover:text-mustard flex items-center justify-center transition-colors text-xs">
+                                <i class="fa-brands fa-twitter"></i>
+                            </a>
+                            <a href="#" aria-label="Pinterest" class="w-8 h-8 rounded-full border border-dark-gray hover:border-mustard hover:text-mustard flex items-center justify-center transition-colors text-xs">
+                                <i class="fa-brands fa-pinterest-p"></i>
+                            </a>
+                            <a href="#" aria-label="Dribbble" class="w-8 h-8 rounded-full border border-dark-gray hover:border-mustard hover:text-mustard flex items-center justify-center transition-colors text-xs">
+                                <i class="fa-brands fa-dribbble"></i>
+                            </a>
+                            <a href="#" aria-label="LinkedIn" class="w-8 h-8 rounded-full border border-dark-gray hover:border-mustard hover:text-mustard flex items-center justify-center transition-colors text-xs">
+                                <i class="fa-brands fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION: SERVICES & CAPABILITIES -->
+        <section id="services" class="relative py-20 border-b border-dark-gray">
+            <!-- Giant Ghost Letter S -->
+            <div class="ghost-letter absolute -top-12 -left-6 text-[140px] sm:text-[180px] text-ghost-gray select-none z-0">
+                S
+            </div>
+
+            <!-- Header & Divider -->
+            <div class="relative z-10 mb-12">
+                <h2 class="font-heading font-black text-3xl sm:text-4xl tracking-wider text-light-gray uppercase">
+                    SERVICES
+                </h2>
+                <div class="w-full h-[2px] bg-dark-gray my-4 flex items-center">
+                    <div class="w-16 h-[2px] bg-mustard"></div>
+                </div>
+            </div>
+
+            <!-- Services Grid -->
+            <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- Service Card 1 -->
+                <div class="bg-card-black border border-dark-gray p-8 group hover:border-mustard transition-all duration-300 relative overflow-hidden">
+                    <div class="text-mustard text-3xl mb-4">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <h3 class="font-heading font-bold text-lg text-white uppercase tracking-wider mb-3 group-hover:text-mustard transition-colors">
+                        UI/UX Architecture
+                    </h3>
+                    <p class="text-xs text-light-gray leading-relaxed mb-6">
+                        Human-centered product design, interactive wireframing, high-fidelity design systems, and rapid interactive prototyping for complex enterprise software.
+                    </p>
+                    <ul class="text-[11px] font-mono text-light-gray/70 space-y-1.5 border-t border-dark-gray pt-4">
+                        <li><i class="fa-solid fa-check text-mustard mr-2"></i>User Research & Journey Mapping</li>
+                        <li><i class="fa-solid fa-check text-mustard mr-2"></i>Figma Design Systems & Components</li>
+                        <li><i class="fa-solid fa-check text-mustard mr-2"></i>Usability Testing & Analytics</li>
+                    </ul>
+                </div>
+
+                <!-- Service Card 2 -->
+                <div class="bg-card-black border border-dark-gray p-8 group hover:border-mustard transition-all duration-300 relative overflow-hidden">
+                    <div class="text-mustard text-3xl mb-4">
+                        <i class="fa-solid fa-code"></i>
+                    </div>
+                    <h3 class="font-heading font-bold text-lg text-white uppercase tracking-wider mb-3 group-hover:text-mustard transition-colors">
+                        Front-End Engineering
+                    </h3>
+                    <p class="text-xs text-light-gray leading-relaxed mb-6">
+                        Pixel-perfect implementation using modern JavaScript frameworks, custom HTML5/CSS3 architectures, and fluid responsive design standard compliant builds.
+                    </p>
+                    <ul class="text-[11px] font-mono text-light-gray/70 space-y-1.5 border-t border-dark-gray pt-4">
+                        <li><i class="fa-solid fa-check text-mustard mr-2"></i>React / Next.js / Tailwind CSS</li>
+                        <li><i class="fa-solid fa-check text-mustard mr-2"></i>WebGL & 3D Interactive Canvas</li>
+                        <li><i class="fa-solid fa-check text-mustard mr-2"></i>Core Web Vitals Performance Optimization</li>
+                    </ul>
+                </div>
+
+                <!-- Service Card 3 -->
+                <div class="bg-card-black border border-dark-gray p-8 group hover:border-mustard transition-all duration-300 relative overflow-hidden">
+                    <div class="text-mustard text-3xl mb-4">
+                        <i class="fa-solid fa-swatchbook"></i>
+                    </div>
+                    <h3 class="font-heading font-bold text-lg text-white uppercase tracking-wider mb-3 group-hover:text-mustard transition-colors">
+                        Design Systems & Branding
+                    </h3>
+                    <p class="text-xs text-light-gray leading-relaxed mb-6">
+                        Creating robust, scalable brand design languages, multi-platform style guides, typography hierarchies, and complete visual identities.
+                    </p>
+                    <ul class="text-[11px] font-mono text-light-gray/70 space-y-1.5 border-t border-dark-gray pt-4">
+                        <li><i class="fa-solid fa-check text-mustard mr-2"></i>Component Libraries & Token Systems</li>
+                        <li><i class="fa-solid fa-check text-mustard mr-2"></i>Editorial Visual Identity & Logos</li>
+                        <li><i class="fa-solid fa-check text-mustard mr-2"></i>Brand Governance Guidelines</li>
+                    </ul>
+                </div>
+
+                <!-- Service Card 4 -->
+                <div class="bg-card-black border border-dark-gray p-8 group hover:border-mustard transition-all duration-300 relative overflow-hidden">
+                    <div class="text-mustard text-3xl mb-4">
+                        <i class="fa-solid fa-mobile-screen-button"></i>
+                    </div>
+                    <h3 class="font-heading font-bold text-lg text-white uppercase tracking-wider mb-3 group-hover:text-mustard transition-colors">
+                        Mobile & Application Design
+                    </h3>
+                    <p class="text-xs text-light-gray leading-relaxed mb-6">
+                        Crafting intuitive cross-platform mobile experiences for iOS & Android, focusing on thumb-friendly layouts and micro-interactions.
+                    </p>
+                    <ul class="text-[11px] font-mono text-light-gray/70 space-y-1.5 border-t border-dark-gray pt-4">
+                        <li><i class="fa-solid fa-check text-mustard mr-2"></i>iOS & Android UI Guidelines</li>
+                        <li><i class="fa-solid fa-check text-mustard mr-2"></i>Interactive Haptic Prototypes</li>
+                        <li><i class="fa-solid fa-check text-mustard mr-2"></i>App Store Visual Assets</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 2: MY SKILLS -->
+        <section id="skills" class="relative py-20 border-b border-dark-gray bg-sec-black/40 -mx-4 sm:-mx-8 px-4 sm:px-8">
+            <div class="max-w-5xl mx-auto relative">
+                
+                <!-- Giant Ghost Letter M -->
+                <div class="ghost-letter absolute -top-12 -left-6 text-[140px] sm:text-[180px] text-ghost-gray select-none z-0">
+                    M
+                </div>
+
+                <!-- Header & Divider -->
+                <div class="relative z-10 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
+                    <div>
+                        <h2 class="font-heading font-black text-3xl sm:text-4xl tracking-wider text-light-gray uppercase">
+                            MY SKILLS
+                        </h2>
+                        <div class="w-full sm:w-64 h-[2px] bg-dark-gray my-4 flex items-center">
+                            <div class="w-16 h-[2px] bg-mustard"></div>
+                        </div>
+                    </div>
+
+                    <!-- Skill Category Filter Tabs -->
+                    <div class="flex gap-2 font-heading text-xs uppercase tracking-wider">
+                        <button onclick="filterSkills('all')" class="skill-tab active bg-mustard text-black px-3 py-1.5 font-bold transition-all">All</button>
+                        <button onclick="filterSkills('engineering')" class="skill-tab bg-dark-gray text-light-gray hover:text-white px-3 py-1.5 font-bold transition-all">Engineering</button>
+                        <button onclick="filterSkills('design')" class="skill-tab bg-dark-gray text-light-gray hover:text-white px-3 py-1.5 font-bold transition-all">Design Tools</button>
+                    </div>
+                </div>
+
+                <!-- Skill Gauge Circles Container -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 relative z-10 text-center" id="skillsGrid">
+                    
+                    <!-- Skill 1: HTML & CSS (95%) -->
+                    <div class="flex flex-col items-center group skill-item" data-category="engineering">
+                        <div class="relative w-36 h-36 flex items-center justify-center">
+                            <svg class="w-full h-full" viewBox="0 0 120 120">
+                                <circle class="text-dark-gray" stroke-width="8" stroke="currentColor" fill="transparent" r="50" cx="60" cy="60" />
+                                <circle class="text-mustard progress-ring-circle" stroke-width="8" stroke-dasharray="314.15" stroke-dashoffset="314.15" data-percent="95" stroke-linecap="butt" stroke="currentColor" fill="transparent" r="50" cx="60" cy="60" />
+                            </svg>
+                            <span class="absolute font-heading font-black text-2xl text-white tracking-tighter">
+                                95%
+                            </span>
+                        </div>
+                        <h3 class="mt-4 font-heading font-bold text-xs sm:text-sm text-light-gray uppercase tracking-widest group-hover:text-mustard transition-colors">
+                            HTML & CSS
+                        </h3>
+                    </div>
+
+                    <!-- Skill 2: BOOTSTRAP / TAILWIND (88%) -->
+                    <div class="flex flex-col items-center group skill-item" data-category="engineering">
+                        <div class="relative w-36 h-36 flex items-center justify-center">
+                            <svg class="w-full h-full" viewBox="0 0 120 120">
+                                <circle class="text-dark-gray" stroke-width="8" stroke="currentColor" fill="transparent" r="50" cx="60" cy="60" />
+                                <circle class="text-mustard progress-ring-circle" stroke-width="8" stroke-dasharray="314.15" stroke-dashoffset="314.15" data-percent="88" stroke-linecap="butt" stroke="currentColor" fill="transparent" r="50" cx="60" cy="60" />
+                            </svg>
+                            <span class="absolute font-heading font-black text-2xl text-white tracking-tighter">
+                                88%
+                            </span>
+                        </div>
+                        <h3 class="mt-4 font-heading font-bold text-xs sm:text-sm text-light-gray uppercase tracking-widest group-hover:text-mustard transition-colors">
+                            TAILWIND / BOOTSTRAP
+                        </h3>
+                    </div>
+
+                    <!-- Skill 3: JAVASCRIPT (82%) -->
+                    <div class="flex flex-col items-center group skill-item" data-category="engineering">
+                        <div class="relative w-36 h-36 flex items-center justify-center">
+                            <svg class="w-full h-full" viewBox="0 0 120 120">
+                                <circle class="text-dark-gray" stroke-width="8" stroke="currentColor" fill="transparent" r="50" cx="60" cy="60" />
+                                <circle class="text-mustard progress-ring-circle" stroke-width="8" stroke-dasharray="314.15" stroke-dashoffset="314.15" data-percent="82" stroke-linecap="butt" stroke="currentColor" fill="transparent" r="50" cx="60" cy="60" />
+                            </svg>
+                            <span class="absolute font-heading font-black text-2xl text-white tracking-tighter">
+                                82%
+                            </span>
+                        </div>
+                        <h3 class="mt-4 font-heading font-bold text-xs sm:text-sm text-light-gray uppercase tracking-widest group-hover:text-mustard transition-colors">
+                            JAVASCRIPT
+                        </h3>
+                    </div>
+
+                    <!-- Skill 4: FIGMA & UI DESIGN (90%) -->
+                    <div class="flex flex-col items-center group skill-item" data-category="design">
+                        <div class="relative w-36 h-36 flex items-center justify-center">
+                            <svg class="w-full h-full" viewBox="0 0 120 120">
+                                <circle class="text-dark-gray" stroke-width="8" stroke="currentColor" fill="transparent" r="50" cx="60" cy="60" />
+                                <circle class="text-mustard progress-ring-circle" stroke-width="8" stroke-dasharray="314.15" stroke-dashoffset="314.15" data-percent="90" stroke-linecap="butt" stroke="currentColor" fill="transparent" r="50" cx="60" cy="60" />
+                            </svg>
+                            <span class="absolute font-heading font-black text-2xl text-white tracking-tighter">
+                                90%
+                            </span>
+                        </div>
+                        <h3 class="mt-4 font-heading font-bold text-xs sm:text-sm text-light-gray uppercase tracking-widest group-hover:text-mustard transition-colors">
+                            FIGMA & UI DESIGN
+                        </h3>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION: FEATURED WORKS / PORTFOLIO -->
+        <section id="works" class="relative py-20 border-b border-dark-gray">
+            <!-- Giant Ghost Letter P -->
+            <div class="ghost-letter absolute -top-12 -left-6 text-[140px] sm:text-[180px] text-ghost-gray select-none z-0">
+                P
+            </div>
+
+            <!-- Header & Divider -->
+            <div class="relative z-10 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div>
+                    <h2 class="font-heading font-black text-3xl sm:text-4xl tracking-wider text-light-gray uppercase">
+                        FEATURED WORKS
+                    </h2>
+                    <div class="w-full sm:w-64 h-[2px] bg-dark-gray my-4 flex items-center">
+                        <div class="w-16 h-[2px] bg-mustard"></div>
+                    </div>
+                </div>
+
+                <!-- Category Filters -->
+                <div class="flex flex-wrap gap-2 font-heading text-xs uppercase tracking-wider">
+                    <button onclick="filterProjects('all')" class="project-filter active bg-mustard text-black px-3 py-1.5 font-bold transition-all">All</button>
+                    <button onclick="filterProjects('ui')" class="project-filter bg-dark-gray text-light-gray hover:text-white px-3 py-1.5 font-bold transition-all">UI/UX</button>
+                    <button onclick="filterProjects('web')" class="project-filter bg-dark-gray text-light-gray hover:text-white px-3 py-1.5 font-bold transition-all">Web Apps</button>
+                    <button onclick="filterProjects('branding')" class="project-filter bg-dark-gray text-light-gray hover:text-white px-3 py-1.5 font-bold transition-all">Branding</button>
+                </div>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projectsGrid">
+                
+                <!-- Project 1 -->
+                <div class="project-card bg-card-black border border-dark-gray overflow-hidden group cursor-pointer" data-category="ui" onclick="openProjectModal(0)">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop" 
+                             alt="Apex FinTech Dashboard" 
+                             class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500">
+                        <div class="absolute inset-0 bg-black/60 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                            <span class="opacity-0 group-hover:opacity-100 bg-mustard text-black font-heading font-bold text-xs uppercase tracking-widest px-4 py-2 transition-opacity">
+                                View Case Study
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <span class="text-[10px] font-mono text-mustard uppercase tracking-widest">UI/UX • FinTech</span>
+                        <h3 class="font-heading font-bold text-base text-white uppercase tracking-tight mt-1 group-hover:text-mustard transition-colors">
+                            Apex Analytics Engine
+                        </h3>
+                        <p class="text-xs text-light-gray/80 mt-2 line-clamp-2">
+                            Next-generation financial data visualization portal engineered for institutional algorithmic traders.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card bg-card-black border border-dark-gray overflow-hidden group cursor-pointer" data-category="web" onclick="openProjectModal(1)">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=800&auto=format&fit=crop" 
+                             alt="Kuro Editorial Platform" 
+                             class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500">
+                        <div class="absolute inset-0 bg-black/60 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                            <span class="opacity-0 group-hover:opacity-100 bg-mustard text-black font-heading font-bold text-xs uppercase tracking-widest px-4 py-2 transition-opacity">
+                                View Case Study
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <span class="text-[10px] font-mono text-mustard uppercase tracking-widest">Web App • Editorial</span>
+                        <h3 class="font-heading font-bold text-base text-white uppercase tracking-tight mt-1 group-hover:text-mustard transition-colors">
+                            Kuro Digital Magazine
+                        </h3>
+                        <p class="text-xs text-light-gray/80 mt-2 line-clamp-2">
+                            High-contrast dark mode publishing platform with dynamic custom typography and interactive soundscapes.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card bg-card-black border border-dark-gray overflow-hidden group cursor-pointer" data-category="branding" onclick="openProjectModal(2)">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=800&auto=format&fit=crop" 
+                             alt="Veloce Design System" 
+                             class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500">
+                        <div class="absolute inset-0 bg-black/60 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                            <span class="opacity-0 group-hover:opacity-100 bg-mustard text-black font-heading font-bold text-xs uppercase tracking-widest px-4 py-2 transition-opacity">
+                                View Case Study
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <span class="text-[10px] font-mono text-mustard uppercase tracking-widest">Branding • Design Tokens</span>
+                        <h3 class="font-heading font-bold text-base text-white uppercase tracking-tight mt-1 group-hover:text-mustard transition-colors">
+                            Veloce Brand Identity
+                        </h3>
+                        <p class="text-xs text-light-gray/80 mt-2 line-clamp-2">
+                            Unified design architecture and brand guidelines created for an electric supercar manufacturer.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION: WORK EXPERIENCE & TIMELINE -->
+        <section id="experience" class="relative py-20 border-b border-dark-gray bg-sec-black/30 -mx-4 sm:-mx-8 px-4 sm:px-8">
+            <div class="max-w-5xl mx-auto relative">
+                <!-- Giant Ghost Letter E -->
+                <div class="ghost-letter absolute -top-12 -left-6 text-[140px] sm:text-[180px] text-ghost-gray select-none z-0">
+                    E
+                </div>
+
+                <!-- Header & Divider -->
+                <div class="relative z-10 mb-12">
+                    <h2 class="font-heading font-black text-3xl sm:text-4xl tracking-wider text-light-gray uppercase">
+                        EXPERIENCE
+                    </h2>
+                    <div class="w-full h-[2px] bg-dark-gray my-4 flex items-center">
+                        <div class="w-16 h-[2px] bg-mustard"></div>
+                    </div>
+                </div>
+
+                <!-- Editorial Timeline Items -->
+                <div class="relative z-10 border-l-2 border-dark-gray ml-4 sm:ml-8 pl-6 sm:pl-10 space-y-12">
+                    
+                    <!-- Item 1 -->
+                    <div class="relative group">
+                        <div class="absolute -left-[31px] sm:-left-[47px] top-1.5 w-4 h-4 bg-mustard border-4 border-main-black rounded-full group-hover:scale-125 transition-transform"></div>
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
+                            <h3 class="font-heading font-extrabold text-base sm:text-lg text-white uppercase tracking-tight">
+                                Senior Lead UI/UX Engineer
+                            </h3>
+                            <span class="font-mono text-xs text-mustard bg-card-black border border-dark-gray px-3 py-1 inline-block w-fit">
+                                2023 — PRESENT
+                            </span>
+                        </div>
+                        <div class="text-xs font-heading font-bold text-light-gray uppercase tracking-widest mb-3">
+                            Apex Global Systems • San Francisco, CA
+                        </div>
+                        <p class="text-xs text-light-gray/90 leading-relaxed max-w-2xl">
+                            Spearheaded core design token ecosystem across 14 enterprise web applications. Reduced design-to-development handoff turnaround time by 40% and improved Web Accessibility (WCAG 2.1 AAA) compliance across all digital assets.
+                        </p>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="relative group">
+                        <div class="absolute -left-[31px] sm:-left-[47px] top-1.5 w-4 h-4 bg-dark-gray group-hover:bg-mustard border-4 border-main-black rounded-full group-hover:scale-125 transition-transform"></div>
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
+                            <h3 class="font-heading font-extrabold text-base sm:text-lg text-white uppercase tracking-tight">
+                                Product Designer & Front-End Dev
+                            </h3>
+                            <span class="font-mono text-xs text-light-gray bg-card-black border border-dark-gray px-3 py-1 inline-block w-fit">
+                                2020 — 2023
+                            </span>
+                        </div>
+                        <div class="text-xs font-heading font-bold text-light-gray uppercase tracking-widest mb-3">
+                            Glyph Digital Agency • New York, NY
+                        </div>
+                        <p class="text-xs text-light-gray/90 leading-relaxed max-w-2xl">
+                            Designed and built bespoke digital product experiences for luxury fashion and tech clients. Directed visual art direction, front-end architecture, and interactive web motion graphics.
+                        </p>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="relative group">
+                        <div class="absolute -left-[31px] sm:-left-[47px] top-1.5 w-4 h-4 bg-dark-gray group-hover:bg-mustard border-4 border-main-black rounded-full group-hover:scale-125 transition-transform"></div>
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
+                            <h3 class="font-heading font-extrabold text-base sm:text-lg text-white uppercase tracking-tight">
+                                Interactive UI Developer
+                            </h3>
+                            <span class="font-mono text-xs text-light-gray bg-card-black border border-dark-gray px-3 py-1 inline-block w-fit">
+                                2017 — 2020
+                            </span>
+                        </div>
+                        <div class="text-xs font-heading font-bold text-light-gray uppercase tracking-widest mb-3">
+                            Horizon Media Studio • Austin, TX
+                        </div>
+                        <p class="text-xs text-light-gray/90 leading-relaxed max-w-2xl">
+                            Created high-converting landing pages, interactive micro-sites, and custom web animations using vanilla JS, SVG, and HTML5 Canvas engines.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 3: REFERENCE (TESTIMONIALS) -->
+        <section id="reference" class="relative py-20 border-b border-dark-gray">
+            
+            <!-- Giant Ghost Letter R -->
+            <div class="ghost-letter absolute -top-12 -left-6 text-[140px] sm:text-[180px] text-ghost-gray select-none z-0">
+                R
+            </div>
+
+            <!-- Header & Divider -->
+            <div class="relative z-10 mb-12">
+                <h2 class="font-heading font-black text-3xl sm:text-4xl tracking-wider text-light-gray uppercase">
+                    REFERENCE
+                </h2>
+                <div class="w-full h-[2px] bg-dark-gray my-4 flex items-center">
+                    <div class="w-16 h-[2px] bg-mustard"></div>
+                </div>
+            </div>
+
+            <!-- Carousel Wrapper Container -->
+            <div class="relative z-10 max-w-xl mx-auto px-4">
+                
+                <div class="relative bg-white text-black p-8 sm:p-10 shadow-2xl rounded-none transition-all duration-300">
+                    
+                    <!-- Overlapping Avatar -->
+                    <div class="absolute -top-10 left-1/2 transform -translate-x-1/2">
+                        <div class="relative w-20 h-20 rounded-full border-4 border-main-black overflow-hidden bg-gray-200 shadow-md">
+                            <img id="testimonial-avatar" 
+                                 src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop" 
+                                 alt="John Doe" 
+                                 class="w-full h-full object-cover">
+                        </div>
+                        <!-- Verified Badge -->
+                        <div class="absolute bottom-0 right-0 w-6 h-6 bg-mustard text-black rounded-full flex items-center justify-center border-2 border-main-black text-[10px]">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial Content -->
+                    <div class="mt-6 text-center">
+                        <p id="testimonial-quote" class="text-xs sm:text-sm italic text-gray-700 leading-relaxed font-body">
+                            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
+                        </p>
+                        <div id="testimonial-author" class="mt-4 font-heading font-extrabold text-sm uppercase tracking-wider text-black">
+                            — John Doe
+                        </div>
+                        <div id="testimonial-role" class="text-[10px] font-heading font-semibold tracking-widest text-gray-500 uppercase">
+                            Senior Tech Lead, Apex Studio
+                        </div>
+                    </div>
+
+                    <!-- Left Slider Arrow Tab -->
+                    <button onclick="prevTestimonial()" aria-label="Previous Testimonial" class="absolute -left-5 top-1/2 transform -translate-y-1/2 bg-dark-gray hover:bg-black text-white w-10 h-14 flex items-center justify-center transition-colors shadow-lg group">
+                        <i class="fa-solid fa-chevron-left text-sm group-hover:-translate-x-0.5 transition-transform"></i>
+                    </button>
+
+                    <!-- Right Slider Arrow Tab (Yellow Accent) -->
+                    <button onclick="nextTestimonial()" aria-label="Next Testimonial" class="absolute -right-5 top-1/2 transform -translate-y-1/2 bg-mustard hover:bg-mustard-hover text-black w-10 h-14 flex items-center justify-center transition-colors shadow-lg group">
+                        <i class="fa-solid fa-chevron-right text-sm group-hover:translate-x-0.5 transition-transform"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- SECTION 4: CONTACT ME -->
+        <section id="contact" class="relative py-20">
+            
+            <!-- Giant Ghost Letter C -->
+            <div class="ghost-letter absolute -top-12 -left-6 text-[140px] sm:text-[180px] text-ghost-gray select-none z-0">
+                C
+            </div>
+
+            <!-- Header & Divider -->
+            <div class="relative z-10 mb-10">
+                <h2 class="font-heading font-black text-3xl sm:text-4xl tracking-wider text-light-gray uppercase">
+                    CONTACT ME
+                </h2>
+                <div class="w-full h-[2px] bg-dark-gray my-4 flex items-center">
+                    <div class="w-16 h-[2px] bg-mustard"></div>
+                </div>
+            </div>
+
+            <!-- Contact Information Row -->
+            <div class="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center mb-10">
+                
+                <!-- Small Circular Avatar Cutout -->
+                <div class="md:col-span-3 flex justify-center md:justify-start">
+                    <div class="w-24 h-24 rounded-full border-2 border-mustard overflow-hidden shadow-lg p-1 bg-dark-gray">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=300&auto=format&fit=crop" 
+                             alt="Victor Profile" 
+                             class="w-full h-full object-cover rounded-full grayscale">
+                    </div>
+                </div>
+
+                <!-- Info Columns (Phone, Email, Website) -->
+                <div class="md:col-span-9 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center sm:text-left">
+                    
+                    <!-- Phone -->
+                    <div class="space-y-1">
+                        <div class="flex items-center justify-center sm:justify-start gap-2 text-mustard font-heading font-bold text-xs uppercase tracking-wider">
+                            <i class="fa-solid fa-phone"></i>
+                            <span>PHONE</span>
+                        </div>
+                        <p class="text-xs text-light-gray font-mono">+1 214 5678 901</p>
+                        <p class="text-xs text-light-gray font-mono">+1 987 6543 210</p>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="space-y-1">
+                        <div class="flex items-center justify-center sm:justify-start gap-2 text-mustard font-heading font-bold text-xs uppercase tracking-wider">
+                            <i class="fa-solid fa-envelope"></i>
+                            <span>E-MAIL</span>
+                        </div>
+                        <p class="text-xs text-light-gray font-mono">victor.capslock@design.com</p>
+                        <p class="text-xs text-light-gray font-mono">contact@capslock.io</p>
+                    </div>
+
+                    <!-- Website -->
+                    <div class="space-y-1">
+                        <div class="flex items-center justify-center sm:justify-start gap-2 text-mustard font-heading font-bold text-xs uppercase tracking-wider">
+                            <i class="fa-solid fa-globe"></i>
+                            <span>WEBSITE</span>
+                        </div>
+                        <p class="text-xs text-light-gray font-mono">www.victorcapslock.design</p>
+                        <p class="text-xs text-light-gray font-mono">www.capslock.io</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Social Media Row -->
+            <div class="relative z-10 flex justify-center sm:justify-start items-center gap-3 mb-12 border-b border-dark-gray pb-8">
+                <a href="#" aria-label="Facebook" class="w-7 h-7 rounded-full border border-dark-gray hover:border-mustard hover:text-mustard flex items-center justify-center transition-colors text-xs text-light-gray">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <a href="#" aria-label="Twitter" class="w-7 h-7 rounded-full border border-dark-gray hover:border-mustard hover:text-mustard flex items-center justify-center transition-colors text-xs text-light-gray">
+                    <i class="fa-brands fa-twitter"></i>
+                </a>
+                <a href="#" aria-label="Pinterest" class="w-7 h-7 rounded-full border border-dark-gray hover:border-mustard hover:text-mustard flex items-center justify-center transition-colors text-xs text-light-gray">
+                    <i class="fa-brands fa-pinterest-p"></i>
+                </a>
+                <a href="#" aria-label="Dribbble" class="w-7 h-7 rounded-full border border-dark-gray hover:border-mustard hover:text-mustard flex items-center justify-center transition-colors text-xs text-light-gray">
+                    <i class="fa-brands fa-dribbble"></i>
+                </a>
+                <a href="#" aria-label="Google Plus" class="w-7 h-7 rounded-full border border-dark-gray hover:border-mustard hover:text-mustard flex items-center justify-center transition-colors text-xs text-light-gray">
+                    <i class="fa-brands fa-google-plus-g"></i>
+                </a>
+            </div>
+
+            <!-- Two Column Area: Map & Contact Form -->
+            <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+                
+                <!-- Left: Stylized Map Canvas / Vector Map Graphic -->
+                <div class="relative w-full h-72 md:h-full min-h-[280px] bg-sec-black border border-dark-gray overflow-hidden">
+                    <canvas id="mapCanvas" class="w-full h-full block"></canvas>
+                    
+                    <!-- Map Badge Overlay -->
+                    <div class="absolute top-3 left-3 bg-main-black/90 px-3 py-1.5 text-[10px] font-heading uppercase tracking-widest text-mustard border border-dark-gray">
+                        <i class="fa-solid fa-location-dot mr-1"></i> Studio Location
+                    </div>
+                </div>
+
+                <!-- Right: Minimalist Form -->
+                <form id="contactForm" onsubmit="handleFormSubmit(event)" class="flex flex-col gap-4">
+                    <div>
+                        <label for="name" class="sr-only">Name</label>
+                        <input type="text" id="name" required placeholder="Name" 
+                               class="w-full bg-white text-black px-4 py-3 text-xs sm:text-sm font-body outline-none focus:ring-2 focus:ring-mustard border-none transition-all placeholder:text-gray-500">
+                    </div>
+                    <div>
+                        <label for="email" class="sr-only">E-mail</label>
+                        <input type="email" id="email" required placeholder="E-mail" 
+                               class="w-full bg-white text-black px-4 py-3 text-xs sm:text-sm font-body outline-none focus:ring-2 focus:ring-mustard border-none transition-all placeholder:text-gray-500">
+                    </div>
+                    <div>
+                        <label for="subject" class="sr-only">Subject</label>
+                        <select id="subject" class="w-full bg-white text-black px-4 py-3 text-xs sm:text-sm font-body outline-none focus:ring-2 focus:ring-mustard border-none transition-all">
+                            <option value="General Inquiry">General Inquiry</option>
+                            <option value="Project Request">New Project Request</option>
+                            <option value="Design Audit">Design System Audit</option>
+                            <option value="Speaking/Mentorship">Speaking or Mentorship</option>
+                        </select>
+                    </div>
+                    <div class="flex-grow">
+                        <label for="message" class="sr-only">Message</label>
+                        <textarea id="message" required rows="4" placeholder="Message" 
+                                  class="w-full h-full bg-white text-black px-4 py-3 text-xs sm:text-sm font-body outline-none focus:ring-2 focus:ring-mustard border-none transition-all placeholder:text-gray-500 resize-none"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-mustard hover:bg-mustard-hover text-black py-3.5 font-heading font-black text-xs uppercase tracking-widest transition-colors shadow-md">
+                        SEND MESSAGE
+                    </button>
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- PROJECT CASE STUDY MODAL -->
+    <div id="projectModal" class="fixed inset-0 z-50 bg-black/80 modal-blur flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-card-black border border-dark-gray max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 relative">
+            <button onclick="closeProjectModal()" class="absolute top-4 right-4 text-light-gray hover:text-mustard text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <span id="modalCategory" class="text-[10px] font-mono text-mustard uppercase tracking-widest">CATEGORY</span>
+            <h3 id="modalTitle" class="font-heading font-black text-2xl text-white uppercase tracking-tight mt-1 mb-4">
+                PROJECT TITLE
+            </h3>
+            <img id="modalImage" src="" alt="Project Preview" class="w-full h-64 object-cover border border-dark-gray mb-6">
+            <p id="modalDesc" class="text-xs text-light-gray leading-relaxed mb-6">
+                Detailed description...
+            </p>
+            <div class="flex items-center justify-between border-t border-dark-gray pt-4">
+                <span class="text-[10px] text-light-gray font-mono">STATUS: COMPLETED 2026</span>
+                <button onclick="closeProjectModal()" class="bg-mustard text-black px-4 py-2 font-heading font-bold text-xs uppercase tracking-wider">
+                    Close Case Study
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ESTIMATE CALCULATOR MODAL -->
+    <div id="quoteModal" class="fixed inset-0 z-50 bg-black/80 modal-blur flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-card-black border border-dark-gray max-w-lg w-full p-6 sm:p-8 relative">
+            <button onclick="closeQuoteModal()" class="absolute top-4 right-4 text-light-gray hover:text-mustard text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="font-heading font-black text-xl text-white uppercase tracking-tight mb-2">
+                PROJECT ESTIMATOR
+            </h3>
+            <p class="text-xs text-light-gray mb-6">Select your project requirements for an instant estimate range.</p>
+
+            <form onsubmit="handleQuoteSubmit(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block font-heading uppercase text-[10px] tracking-wider text-mustard mb-2">Service Type</label>
+                    <select id="estService" onchange="calcEstimate()" class="w-full bg-white text-black p-3 outline-none">
+                        <option value="3500">UI/UX Design Architecture ($3,500+)</option>
+                        <option value="5000">Full Web Application Build ($5,000+)</option>
+                        <option value="2500">Design System Architecture ($2,500+)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-heading uppercase text-[10px] tracking-wider text-mustard mb-2">Estimated Timeline</label>
+                    <select id="estTime" onchange="calcEstimate()" class="w-full bg-white text-black p-3 outline-none">
+                        <option value="1">Standard (4-6 Weeks)</option>
+                        <option value="1.25">Expedited (2-3 Weeks +25%)</option>
+                    </select>
+                </div>
+                <div class="p-4 bg-sec-black border border-dark-gray flex justify-between items-center my-4">
+                    <span class="font-heading uppercase text-xs text-light-gray">Est. Budget Range:</span>
+                    <span id="estResult" class="font-heading font-black text-lg text-mustard">$3,500 - $4,800</span>
+                </div>
+                <button type="submit" class="w-full bg-mustard text-black py-3 font-heading font-bold uppercase tracking-wider">
+                    BOOK INITIAL CONSULTATION
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- FLOATING THEME CUSTOMIZER WIDGET -->
+    <div id="themePanel" class="fixed bottom-6 left-6 z-50 bg-card-black border border-dark-gray p-4 shadow-2xl hidden flex-col gap-3 font-heading text-xs uppercase">
+        <span class="text-mustard font-bold text-[10px] tracking-wider">Select Accent Theme</span>
+        <div class="flex items-center gap-3">
+            <button onclick="setTheme('#E5CC20', '#cbb41a')" class="w-6 h-6 rounded-full bg-[#E5CC20] border border-white/20" title="Mustard Yellow"></button>
+            <button onclick="setTheme('#00E5FF', '#00b8cc')" class="w-6 h-6 rounded-full bg-[#00E5FF] border border-white/20" title="Cyber Cyan"></button>
+            <button onclick="setTheme('#FF3B30', '#d62d23')" class="w-6 h-6 rounded-full bg-[#FF3B30] border border-white/20" title="Crimson Red"></button>
+            <button onclick="setTheme('#00E676', '#00b35c')" class="w-6 h-6 rounded-full bg-[#00E676] border border-white/20" title="Emerald Green"></button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="w-full bg-sec-black border-t border-dark-gray py-6 px-4 sm:px-8 mt-12 text-xs text-light-gray font-body">
+        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
+            
+            <!-- Copyright -->
+            <div>
+                © 2026 <span class="text-mustard font-semibold">Victor Capslock</span>. All rights reserved.
+            </div>
+
+            <!-- Footer Socials -->
+            <div class="flex items-center gap-4 text-light-gray">
+                <a href="#" aria-label="Facebook" class="hover:text-mustard transition-colors text-xs"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" aria-label="Twitter" class="hover:text-mustard transition-colors text-xs"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#" aria-label="Pinterest" class="hover:text-mustard transition-colors text-xs"><i class="fa-brands fa-pinterest-p"></i></a>
+                <a href="#" aria-label="Dribbble" class="hover:text-mustard transition-colors text-xs"><i class="fa-brands fa-dribbble"></i></a>
+                <a href="#" aria-label="Google Plus" class="hover:text-mustard transition-colors text-xs"><i class="fa-brands fa-google-plus-g"></i></a>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- Custom Floating Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 bg-mustard text-black px-6 py-4 shadow-2xl z-50 transform translate-y-24 opacity-0 flex items-center gap-3 font-heading text-xs font-bold uppercase tracking-wider border-l-4 border-black">
+        <i id="toast-icon" class="fa-solid fa-circle-check text-base"></i>
+        <span id="toast-message">Action executed successfully.</span>
+    </div>
+
+    <script>
+        // --- Project Data Matrix ---
+        const projectsData = [
+            {
+                title: "Apex Analytics Engine",
+                category: "UI/UX • FinTech",
+                image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop",
+                desc: "An end-to-end redesign of institutional data analytics dashboard. Built with dark-mode aesthetic symmetry, high density data tables, custom charts, and sub-10ms response visualizer interfaces."
+            },
+            {
+                title: "Kuro Digital Magazine",
+                category: "Web App • Editorial",
+                image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=800&auto=format&fit=crop",
+                desc: "Editorial online publication platform tailored for architectural design enthusiasts. Includes custom web typography controls, ambient dark audio players, and fast client-side article rendering."
+            },
+            {
+                title: "Veloce Brand Identity",
+                category: "Branding • Design Tokens",
+                image: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=800&auto=format&fit=crop",
+                desc: "Comprehensive visual branding strategy and component library engineered for an automotive tech brand. Features multi-theme CSS tokens, Figma design components, and brand guidelines."
+            }
+        ];
+
+        // --- Testimonials Carousel Data ---
+        const testimonials = [
+            {
+                quote: "Victor is a rare design powerhouse who seamlessly bridges editorial aesthetics with technical front-end precision. His work transformed our user engagement metrics within weeks.",
+                author: "— John Doe",
+                role: "Senior Tech Lead, Apex Studio",
+                avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop"
+            },
+            {
+                quote: "Working alongside Victor on our visual system revamp was an incredible experience. Precise typography, robust layout discipline, and outstanding creative direction.",
+                author: "— Sarah Jenkins",
+                role: "VP of Product, Glyph Digital",
+                avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=300&auto=format&fit=crop"
+            },
+            {
+                quote: "The contrast, symmetry, and attention to detail Victor brings to UI designs are second to none. Truly a world-class designer.",
+                author: "— Marcus Vance",
+                role: "Design Director, Horizon Media",
+                avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=300&auto=format&fit=crop"
+            }
+        ];
+
+        let currentTestimonialIndex = 0;
+
+        function updateTestimonial(index) {
+            const card = document.querySelector('#reference .bg-white');
+            if(!card) return;
+            card.classList.add('opacity-50', 'scale-[0.98]');
+
+            setTimeout(() => {
+                const item = testimonials[index];
+                document.getElementById('testimonial-quote').textContent = `"${item.quote}"`;
+                document.getElementById('testimonial-author').textContent = item.author;
+                document.getElementById('testimonial-role').textContent = item.role;
+                document.getElementById('testimonial-avatar').src = item.avatar;
+                card.classList.remove('opacity-50', 'scale-[0.98]');
+            }, 150);
+        }
+
+        function nextTestimonial() {
+            currentTestimonialIndex = (currentTestimonialIndex + 1) % testimonials.length;
+            updateTestimonial(currentTestimonialIndex);
+        }
+
+        function prevTestimonial() {
+            currentTestimonialIndex = (currentTestimonialIndex - 1 + testimonials.length) % testimonials.length;
+            updateTestimonial(currentTestimonialIndex);
+        }
+
+        // --- Interactive Skill Rings Animation ---
+        function animateSkillRings() {
+            const circles = document.querySelectorAll('.progress-ring-circle');
+            circles.forEach(circle => {
+                const percent = circle.getAttribute('data-percent');
+                const radius = circle.r.baseVal.value;
+                const circumference = 2 * Math.PI * radius;
+                const offset = circumference - (percent / 100) * circumference;
+                
+                circle.style.strokeDasharray = `${circumference} ${circumference}`;
+                circle.style.strokeDashoffset = offset;
+            });
+        }
+
+        // --- Skill Category Filter ---
+        function filterSkills(category) {
+            document.querySelectorAll('.skill-tab').forEach(tab => {
+                tab.classList.remove('bg-mustard', 'text-black');
+                tab.classList.add('bg-dark-gray', 'text-light-gray');
+            });
+            event.target.classList.remove('bg-dark-gray', 'text-light-gray');
+            event.target.classList.add('bg-mustard', 'text-black');
+
+            const items = document.querySelectorAll('.skill-item');
+            items.forEach(item => {
+                if(category === 'all' || item.getAttribute('data-category') === category) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // --- Projects Category Filter ---
+        function filterProjects(category) {
+            document.querySelectorAll('.project-filter').forEach(btn => {
+                btn.classList.remove('bg-mustard', 'text-black');
+                btn.classList.add('bg-dark-gray', 'text-light-gray');
+            });
+            event.target.classList.remove('bg-dark-gray', 'text-light-gray');
+            event.target.classList.add('bg-mustard', 'text-black');
+
+            const cards = document.querySelectorAll('.project-card');
+            cards.forEach(card => {
+                if(category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // --- Case Study Modals ---
+        function openProjectModal(index) {
+            const data = projectsData[index];
+            document.getElementById('modalTitle').textContent = data.title;
+            document.getElementById('modalCategory').textContent = data.category;
+            document.getElementById('modalImage').src = data.image;
+            document.getElementById('modalDesc').textContent = data.desc;
+
+            const modal = document.getElementById('projectModal');
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+        }
+
+        function closeProjectModal() {
+            const modal = document.getElementById('projectModal');
+            modal.classList.add('opacity-0');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+
+        // --- Quote Estimator Modal ---
+        function openQuoteModal() {
+            const modal = document.getElementById('quoteModal');
+            calcEstimate();
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+        }
+
+        function closeQuoteModal() {
+            const modal = document.getElementById('quoteModal');
+            modal.classList.add('opacity-0');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+
+        function calcEstimate() {
+            const base = parseFloat(document.getElementById('estService').value);
+            const timeMult = parseFloat(document.getElementById('estTime').value);
+            const totalMin = Math.round(base * timeMult);
+            const totalMax = Math.round(totalMin * 1.35);
+
+            document.getElementById('estResult').textContent = `$${totalMin.toLocaleString()} - $${totalMax.toLocaleString()}`;
+        }
+
+        function handleQuoteSubmit(e) {
+            e.preventDefault();
+            closeQuoteModal();
+            showToast("Consultation Request Received! Victor will respond in 24h.");
+        }
+
+        // --- Navigation Drawer & Theme Switcher ---
+        function toggleMobileNav() {
+            const drawer = document.getElementById('mobileDrawer');
+            const icon = document.getElementById('mobileMenuIcon');
+            drawer.classList.toggle('hidden');
+            if (drawer.classList.contains('hidden')) {
+                icon.className = 'fa-solid fa-bars';
+            } else {
+                icon.className = 'fa-solid fa-xmark';
+            }
+        }
+
+        function toggleThemePanel() {
+            const panel = document.getElementById('themePanel');
+            panel.classList.toggle('hidden');
+            panel.classList.toggle('flex');
+        }
+
+        function setTheme(accentColor, hoverColor) {
+            document.documentElement.style.setProperty('--accent-color', accentColor);
+            document.documentElement.style.setProperty('--accent-hover', hoverColor);
+            showToast(`Theme updated successfully!`);
+            drawDarkMap();
+        }
+
+        // --- Download CV Callback ---
+        function downloadCV() {
+            showToast("Victor Capslock CV Downloaded Successfully!");
+        }
+
+        // --- Contact Form Handling ---
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            showToast(`Thank you ${name}, your message has been sent!`);
+            document.getElementById('contactForm').reset();
+        }
+
+        // --- Toast Notification Engine ---
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.textContent = message;
+
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3500);
+        }
+
+        // --- Custom Dark Styled Map Canvas ---
+        function drawDarkMap() {
+            const canvas = document.getElementById('mapCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            const width = canvas.parentElement.clientWidth;
+            const height = canvas.parentElement.clientHeight;
+            canvas.width = width * window.devicePixelRatio;
+            canvas.height = height * window.devicePixelRatio;
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+            const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim() || '#E5CC20';
+
+            // Background landmass
+            ctx.fillStyle = '#111113';
+            ctx.fillRect(0, 0, width, height);
+
+            // Water area (Right Coast)
+            ctx.fillStyle = '#0a0a0d';
+            ctx.beginPath();
+            ctx.moveTo(width * 0.7, 0);
+            ctx.bezierCurveTo(width * 0.65, height * 0.3, width * 0.75, height * 0.7, width * 0.68, height);
+            ctx.lineTo(width, height);
+            ctx.lineTo(width, 0);
+            ctx.closePath();
+            ctx.fill();
+
+            // Water grid line details
+            ctx.strokeStyle = '#18181c';
+            ctx.lineWidth = 1;
+            for(let x = 0; x < width; x += 30) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, height);
+                ctx.stroke();
+            }
+            for(let y = 0; y < height; y += 30) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(width, y);
+                ctx.stroke();
+            }
+
+            // Road Grid
+            ctx.strokeStyle = '#222226';
+            ctx.lineWidth = 4;
+            
+            const roads = [
+                [{x: 0, y: height * 0.2}, {x: width * 0.7, y: height * 0.25}],
+                [{x: 0, y: height * 0.55}, {x: width * 0.72, y: height * 0.5}],
+                [{x: 0, y: height * 0.85}, {x: width * 0.68, y: height * 0.85}],
+                [{x: width * 0.2, y: 0}, {x: width * 0.25, y: height}],
+                [{x: width * 0.45, y: 0}, {x: width * 0.5, y: height}],
+            ];
+
+            roads.forEach(r => {
+                ctx.beginPath();
+                ctx.moveTo(r[0].x, r[0].y);
+                ctx.lineTo(r[1].x, r[1].y);
+                ctx.stroke();
+            });
+
+            // Route Line Highlight using active Accent
+            ctx.strokeStyle = accent;
+            ctx.lineWidth = 3;
+            ctx.setLineDash([6, 4]);
+            ctx.beginPath();
+            ctx.moveTo(width * 0.1, height * 0.85);
+            ctx.lineTo(width * 0.25, height * 0.85);
+            ctx.lineTo(width * 0.23, height * 0.52);
+            ctx.lineTo(width * 0.47, height * 0.51);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Location Pin Icon
+            const pinX = width * 0.47;
+            const pinY = height * 0.51;
+
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+            ctx.beginPath();
+            ctx.arc(pinX, pinY, 16, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.fillStyle = accent;
+            ctx.beginPath();
+            ctx.arc(pinX, pinY, 7, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.fillStyle = '#0D0D0F';
+            ctx.beginPath();
+            ctx.arc(pinX, pinY, 3, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // --- Window Initialization ---
+        window.onload = function() {
+            animateSkillRings();
+            drawDarkMap();
+
+            window.addEventListener('resize', drawDarkMap);
+        };
+    </script>
+</body>
+</html>
